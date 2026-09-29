@@ -1,0 +1,32 @@
+<!--meta {"url": "/bezopasno-dlya-koshek/", "title": "Ядовитые растения для кошек: проверка комнатных растений | Взошло!", "description": "Проверь, ядовито ли растение для кошки: монстера, спатифиллум, сансевиерия, хлорофитум и другие. Данные по базе ASPCA, с источником для каждого растения.", "crumbs": [["Безопасно для кота?", "/bezopasno-dlya-koshek/"]], "css": "cat.css"} -->
+<div class="wrap">
+<div class="page-head">{{crumbs}}
+<div class="eyebrow">Растение и котик</div>
+<h1>Ядовитые растения для кошек: проверка</h1>
+<p class="lead">Выбери растение или напиши название — котик сразу покажет, можно ли им жить по соседству. Данные — по базе ASPCA.</p>
+</div>
+<div class="cat-layout section" data-cats>
+<div style="display:flex;flex-direction:column;gap:16px">
+<div class="card stage vz-stage vz-m-idle m-idle vz-t0" data-stage>
+<div class="floor" aria-hidden="true"></div>
+<div class="bubble" data-bubble aria-live="polite">Покажи, что у тебя на подоконнике</div>
+<div class="vz-catwrap">{{cat_svg}}</div>
+<div class="vz-plant"><div class="vz-plantin" style="width:100%;height:100%"><img data-plant-img alt=""></div></div>
+</div>
+<div class="card" data-cat-result style="display:flex;flex-direction:column;gap:10px;min-height:140px">
+<h2 style="font-size:24px">Котик ждет</h2>
+<p>Нажми на растение или напиши название. Зеленая точка — безопасно, красная — ядовито, желтая — лучше повыше.</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:18px">
+<form class="search-row" role="search"><label for="cat-q" class="visually-hidden">Название растения</label><input id="cat-q" type="text" placeholder="Например, монстера или щучий хвост" autocomplete="off"><button class="btn" type="submit">Проверить</button></form>
+<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px"><h2 style="font-size:24px">Или выбери</h2><div style="display:flex;gap:14px;font-size:14px;color:var(--muted)"><span><span class="dot g"></span> безопасно</span><span><span class="dot r"></span> ядовито</span><span><span class="dot y"></span> осторожно</span></div></div>
+<div class="tiles">{{cats_tiles}}</div>
+</div>
+</div>
+<div class="section">
+<div class="card note">Источник — база ASPCA (Американское общество по предотвращению жестокого обращения с животными). Это справка, а не диагноз: если кот погрыз растение и ему плохо — сразу к ветеринару и возьми с собой название растения.</div>
+{{ad:list}}
+</div>
+</div>
+<script type="application/json" id="cats-data">{{cats_json}}</script>

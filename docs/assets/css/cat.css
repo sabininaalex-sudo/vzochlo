@@ -1,0 +1,101 @@
+/* Котик: состояния idle / safe / toxic / care / unknown */
+.vz-stage .v{display:none}
+.vz-m-idle .v-idle,.vz-m-safe .v-safe,.vz-m-toxic .v-toxic,.vz-m-care .v-care,.vz-m-unknown .v-unknown{display:inline}
+.vz-catwrap{transition:transform 0.45s cubic-bezier(.3,1.4,.5,1)}
+.vz-m-safe .vz-catwrap{transform:translateX(26px)}
+.vz-m-toxic .vz-catwrap{transform:translateX(-34px)}
+.vz-m-care .vz-catwrap{transform:translateX(-12px) rotate(-3deg)}
+.vz-tail{transform-origin:240px 332px;animation:vzTail 3.2s ease-in-out infinite alternate}
+.vz-m-safe .vz-tail{animation:vzWag 0.32s ease-in-out infinite alternate}
+.vz-m-toxic .vz-tail{animation:none;transform:rotate(-8deg) scale(1.05)}
+.vz-m-care .vz-tail{animation:vzTwitch 1.2s ease-in-out infinite}
+.vz-earL{transform-origin:128px 110px;transition:transform 0.3s}
+.vz-earR{transform-origin:232px 110px;transition:transform 0.3s}
+.vz-m-toxic .vz-earL{transform:rotate(-38deg)}
+.vz-m-toxic .vz-earR{transform:rotate(38deg)}
+.vz-m-care .vz-earR{transform:rotate(26deg)}
+.vz-m-unknown .vz-earL{transform:rotate(-12deg)}
+.vz-head{transform-origin:180px 214px;transition:transform 0.4s}
+.vz-m-unknown .vz-head{transform:rotate(-12deg)}
+.vz-m-safe .vz-head{transform:rotate(5deg)}
+.vz-blink{transform-origin:180px 142px;animation:vzBlink 4s infinite}
+.vz-sprout{transform-origin:180px 72px;animation:vzSprout 2.6s ease-in-out infinite alternate}
+.vz-m-safe .vz-sprout{animation:vzSprout 0.5s ease-in-out infinite alternate}
+.vz-sp-wilt{display:none}
+.vz-m-toxic .vz-sp-wilt{display:inline}
+.vz-m-toxic .vz-sp-ok{display:none}
+.vz-m-toxic .vz-sprout{animation:none}
+.vz-m-care .vz-sprout{animation:none;transform:rotate(-18deg)}
+.vz-m-unknown .vz-sprout{animation:none;transform:rotate(14deg)}
+.vz-bloom{transform-origin:180px 38px;transform:scale(0);transition:transform 0.4s cubic-bezier(.3,1.6,.5,1) 0.15s}
+.vz-m-safe .vz-bloom{transform:scale(1)}
+.vz-m-safe.vz-t0 .vz-body{animation:vzHopA 0.5s ease-out,vzBounce 0.6s 0.5s ease-in-out infinite alternate}
+.vz-m-safe.vz-t1 .vz-body{animation:vzHopB 0.5s ease-out,vzBounce 0.6s 0.5s ease-in-out infinite alternate}
+.vz-m-toxic.vz-t0 .vz-body{animation:vzJumpA 0.45s ease-out,vzShiver 0.09s 0.45s linear infinite alternate}
+.vz-m-toxic.vz-t1 .vz-body{animation:vzJumpB 0.45s ease-out,vzShiver 0.09s 0.45s linear infinite alternate}
+.vz-heart{transform-box:fill-box;transform-origin:50% 50%;animation:vzHeart 1.8s ease-out infinite}
+.vz-heart.h2{animation-delay:0.6s}
+.vz-heart.h3{animation-delay:1.2s}
+.vz-q{animation:vzFloat 1.6s ease-in-out infinite alternate}
+.vz-bang{animation:vzFloat 0.5s ease-in-out infinite alternate}
+.vz-plant{transition:transform 0.4s cubic-bezier(.3,1.4,.5,1), opacity 0.3s;transform-origin:50% 100%}
+.vz-m-idle .vz-plant{opacity:0;transform:scale(0.6)}
+.vz-t0 .vz-plantin{animation:vzPopA 0.45s cubic-bezier(.3,1.4,.5,1)}
+.vz-t1 .vz-plantin{animation:vzPopB 0.45s cubic-bezier(.3,1.4,.5,1)}
+@keyframes vzTail{0%{transform:rotate(-4deg)}
+100%{transform:rotate(6deg)}
+}
+@keyframes vzWag{0%{transform:rotate(-16deg)}
+100%{transform:rotate(14deg)}
+}
+@keyframes vzTwitch{0%,70%,100%{transform:rotate(0)}
+80%{transform:rotate(10deg)}
+90%{transform:rotate(-4deg)}
+}
+@keyframes vzBlink{0%,92%,100%{transform:scaleY(1)}
+95%{transform:scaleY(0.1)}
+}
+@keyframes vzSprout{0%{transform:rotate(-7deg)}
+100%{transform:rotate(7deg)}
+}
+@keyframes vzSlow{0%,20%{transform:scaleY(0)}
+45%,70%{transform:scaleY(0.95)}
+100%{transform:scaleY(0)}
+}
+@keyframes vzHopA{0%{transform:translateY(0)}
+40%{transform:translateY(-26px)}
+100%{transform:translateY(0)}
+}
+@keyframes vzHopB{0%{transform:translateY(0)}
+40%{transform:translateY(-26px)}
+100%{transform:translateY(0)}
+}
+@keyframes vzBounce{0%{transform:translateY(0)}
+100%{transform:translateY(-4px)}
+}
+@keyframes vzJumpA{0%{transform:translate(0,0)}
+35%{transform:translate(-20px,-40px) rotate(-6deg)}
+100%{transform:translate(0,0)}
+}
+@keyframes vzJumpB{0%{transform:translate(0,0)}
+35%{transform:translate(-20px,-40px) rotate(-6deg)}
+100%{transform:translate(0,0)}
+}
+@keyframes vzShiver{0%{transform:translateX(-1.5px)}
+100%{transform:translateX(1.5px)}
+}
+@keyframes vzHeart{0%{opacity:0;transform:translateY(10px) scale(0.6)}
+25%{opacity:1}
+100%{opacity:0;transform:translateY(-40px) scale(1.1)}
+}
+@keyframes vzFloat{0%{transform:translateY(0)}
+100%{transform:translateY(-6px)}
+}
+@keyframes vzPopA{0%{transform:scale(0.7) translateY(20px);opacity:0}
+100%{transform:none;opacity:1}
+}
+@keyframes vzPopB{0%{transform:scale(0.7) translateY(20px);opacity:0}
+100%{transform:none;opacity:1}
+}
+@media (prefers-reduced-motion: reduce){.vz-stage *{animation:none !important}
+}

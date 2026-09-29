@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sabininaalex-sudo.github.io/vzochlo/sitemap.xml

@@ -1,0 +1,148 @@
+[
+ {
+  "n": "Хлорофитум",
+  "l": "Chlorophytum comosum",
+  "v": "safe",
+  "syn": [
+   "паучник",
+   "паук",
+   "spider"
+  ],
+  "u": "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/spider-plant",
+  "why": "В базе ASPCA — нетоксичен для кошек.",
+  "more": "Погрызет кончики — коту ничего, а листьям обидно. Поставь повыше ради красоты, а не ради безопасности."
+ },
+ {
+  "n": "Калатея",
+  "l": "Calathea",
+  "v": "safe",
+  "syn": [
+   "молитвенное",
+   "calathea"
+  ],
+  "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/calathea",
+  "why": "В базе ASPCA — нетоксична для кошек.",
+  "more": "Капризничает она из-за сухого воздуха, а не из-за кота."
+ },
+ {
+  "n": "Пеперомия",
+  "l": "Peperomia obtusifolia",
+  "v": "safe",
+  "syn": [
+   "peperomia"
+  ],
+  "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/blunt-leaf-peperomia",
+  "why": "В базе ASPCA — нетоксична для кошек.",
+  "more": "Компактная, можно держать хоть на столе."
+ },
+ {
+  "n": "Орхидея фаленопсис",
+  "l": "Phalaenopsis",
+  "v": "safe",
+  "syn": [
+   "орхидея",
+   "фаленопсис",
+   "phalaenopsis"
+  ],
+  "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/phalaenopsis-orchid",
+  "why": "В базе ASPCA — нетоксична для кошек.",
+  "more": "Это про фаленопсис. Другие орхидеи проверяй отдельно."
+ },
+ {
+  "n": "Нефролепис",
+  "l": "Nephrolepis exaltata",
+  "v": "safe",
+  "syn": [
+   "папоротник",
+   "бостонский"
+  ],
+  "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/boston-fern",
+  "why": "В базе ASPCA — нетоксичен для кошек.",
+  "more": "Не путай с другими «папоротниками»: не все они безопасны."
+ },
+ {
+  "n": "Монстера",
+  "l": "Monstera deliciosa",
+  "v": "toxic",
+  "syn": [
+   "monstera"
+  ],
+  "u": "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/cutleaf-philodendron",
+  "why": "Нерастворимые оксалаты кальция.",
+  "more": "Если погрыз: жжение во рту, слюни, рвота, трудно глотать."
+ },
+ {
+  "n": "Спатифиллум",
+  "l": "Spathiphyllum",
+  "v": "toxic",
+  "syn": [
+   "женское счастье",
+   "спатифилум"
+  ],
+  "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/peace-lily",
+  "why": "Нерастворимые оксалаты кальция.",
+  "more": "Если погрыз: боль во рту, слюни, рвота. Это не настоящая лилия — настоящие лилии (Lilium) для кошек гораздо опаснее."
+ },
+ {
+  "n": "Сансевиерия",
+  "l": "Sansevieria trifasciata",
+  "v": "toxic",
+  "syn": [
+   "щучий хвост",
+   "тещин язык",
+   "сансевьера",
+   "сансивиерия"
+  ],
+  "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/mother-laws-tongue",
+  "why": "Сапонины.",
+  "more": "Если погрыз: тошнота, рвота, понос."
+ },
+ {
+  "n": "Фикус Бенджамина",
+  "l": "Ficus benjamina",
+  "v": "toxic",
+  "syn": [
+   "фикус",
+   "бенджамина"
+  ],
+  "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/fig",
+  "why": "Фицин и псорален в млечном соке.",
+  "more": "Если погрыз: раздражение желудка и кожи."
+ },
+ {
+  "n": "Антуриум",
+  "l": "Anthurium",
+  "v": "toxic",
+  "syn": [
+   "мужское счастье"
+  ],
+  "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/flamingo-flower",
+  "why": "Нерастворимые оксалаты кальция.",
+  "more": "Если погрыз: боль и отек во рту, слюни, рвота. В базе ASPCA карточка на родственный вид, токсин тот же."
+ },
+ {
+  "n": "Драцена",
+  "l": "Dracaena marginata",
+  "v": "toxic",
+  "syn": [
+   "драцена окаймленная",
+   "dracaena"
+  ],
+  "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/red-marginated-dracaena",
+  "why": "Токсин точно не установлен.",
+  "more": "Если погрыз: рвота, слюни, расширенные зрачки, частый пульс."
+ },
+ {
+  "n": "Замиокулькас",
+  "l": "Zamioculcas zamiifolia",
+  "v": "care",
+  "syn": [
+   "долларовое дерево",
+   "zz",
+   "замия"
+  ],
+  "u": "https://www.aspca.org/news/these-houseplants-can-cause-trouble-your-pets",
+  "why": "Отдельной карточки в базе ASPCA нет.",
+  "more": "Но ASPCA упоминает его среди растений с оксалатами кальция: слюни, рвота, понос. Лучше повыше."
+ }
+]
