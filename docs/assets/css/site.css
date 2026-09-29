@@ -290,3 +290,7 @@ input[type="text"], input[type="number"], select { font: 17px/1.2 Onest, sans-se
   .pop .peek { display: none; }
   .pop::after { bottom: auto; top: -8px; transform: rotate(225deg); }
 }
+
+/* Результат квиза */
+.vibe-card { display: flex; flex-direction: column; gap: 8px; background: linear-gradient(135deg, var(--tint-y), var(--tint-g)); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.quiz-box h3 { margin-top: 4px; }
