@@ -87,6 +87,8 @@ def expand(body, root, extra):
     body = body.replace('{{contact}}', extra['contact'])
     body = body.replace('{{plants_grid}}', extra['plants_grid'])
     body = body.replace('{{quiz_json}}', extra['quiz_json'])
+    body = body.replace('{{problems_grid}}', extra.get('problems_grid', ''))
+    body = body.replace('{{bot_url}}', BOT_URL)
     body = body.replace('{{operator}}', esc(CFG.get('operator_name') or 'владелец сайта'))
     body = body.replace('{{today}}', date.today().strftime('%d.%m.%Y'))
 
@@ -181,12 +183,13 @@ def layout(meta, body, root, extra_css):
 <a class="logo" href="{root}" aria-label="{esc(CFG["site_name"])} — на главную">Взошло{LOGO_SVG}</a>
 <nav class="main-nav" id="main-nav" aria-label="Главное меню">{nav}</nav>
 <div class="header-tools">
-<a class="btn-outline" href="{root}instrumenty/poliv/">Напоминалка</a>
+<a class="btn-outline" href="https://t.me/VsoshloBot" target="_blank" rel="noopener">Напоминалка</a>
 <button class="icon-btn theme-toggle" type="button" data-theme-toggle aria-label="Переключить тему">{ICON_MOON}{ICON_SUN}</button>
 <button class="icon-btn menu-btn" type="button" data-menu-btn aria-expanded="false" aria-controls="main-nav" aria-label="Меню">{ICON_MENU}</button>
 </div></div></header>'''
     footer_links = [f'<a href="{root}o-proekte/">О проекте</a>', f'<a href="{root}bezopasno-dlya-koshek/">Растения и кошки</a>',
-                    f'<a href="{root}politika-konfidencialnosti/">Политика конфиденциальности</a>']
+                    f'<a href="{root}politika-konfidencialnosti/">Политика конфиденциальности</a>',
+                    '<a href="https://t.me/VsoshloBot" target="_blank" rel="noopener">Напоминалка в Telegram</a>']
     footer = f'''<footer class="site-footer"><div class="wrap">
 <a class="logo" href="{root}" aria-label="{esc(CFG["site_name"])} — на главную">Взошло{LOGO_SVG}</a>
 <nav aria-label="Нижнее меню">{"".join(footer_links)}</nav>
@@ -292,6 +295,9 @@ def plant_page(p):
         f'<a class="rel" href="@/rasteniya/{o["slug"]}/"><img src="@/assets/img/plants/{o["slug"]}.webp" alt="" width="48" height="48" loading="lazy">'
         f'<span><strong>{esc(o["n"])}</strong><span class="desc">{esc(o["desc"])}</span></span></a>' for o in related(p))
     yellow = any('елт' in a for a, _ in p['probs'])
+    pp = [('zhelteyut-listya', 'Желтеют листья')] if yellow else []
+    pp += [(q['slug'], q['card']) for q in PROBLEMS if p['slug'] in q['plants']]
+    prob_links = ''.join(f'<li><a href="@/chto-s-rasteniem/{s}/">{esc(n)}</a></li>' for s, n in pp)
     body = f'''<div class="wrap">
 <div class="page-head">{{{{crumbs}}}}</div>
 <div class="profile-top">
@@ -321,7 +327,7 @@ def plant_page(p):
 {sec("Температура", p["temp"])}
 {sec("Грунт и пересадка", p["soil"])}
 {sec("Размножение", p["prop"])}
-<section class="card"><h2>Частые беды</h2><ul class="plist">{probs}</ul>{'<p style="margin-top:10px"><a href="@/chto-s-rasteniem/zhelteyut-listya/" style="color:var(--accent)">Подробно: почему желтеют листья →</a></p>' if yellow else ''}</section>
+<section class="card"><h2>Частые беды</h2><ul class="plist">{probs}</ul>{'<p style="margin-top:12px"><b>Подробные разборы:</b></p><ul class="plist">' + prob_links + '</ul>' if prob_links else ''}</section>
 <section class="card"><h2>Интересно</h2><ul class="plist">{facts}</ul></section>
 <section class="card"><h2>{esc(p["n"])} и кошки</h2><p style="margin-top:8px"><span class="tag {cw[1]}">{cw[2]}</span></p><p style="margin-top:8px">{esc(p["cat_note"])}</p><p style="margin-top:8px"><a href="@/bezopasno-dlya-koshek/" style="color:var(--accent)">Проверить другие растения →</a></p></section>
 <section class="card"><h2>Источники</h2><p class="desc" style="margin-top:6px">Факты взяты из справочников университетских служб, RHS и базы ASPCA. Где источники расходятся, мы так и пишем.</p><ul class="plist">{srcs}</ul></section>
@@ -329,7 +335,79 @@ def plant_page(p):
 </div>
 <aside class="sticky"><div class="card"><div class="eyebrow">Похожие по характеру</div><div class="rel-list">{rel}</div>
 <p style="margin-top:10px"><a href="@/rasteniya/" style="color:var(--accent)">Весь каталог →</a></p></div>
-<div class="card"><div class="eyebrow">Не знаешь, что выбрать?</div><p style="margin-top:8px">Шесть вопросов — и три растения под твое окно и вайб.</p><p style="margin-top:10px"><a class="btn" href="@/podbor/">Пройти квиз</a></p></div></aside>
+<div class="card"><div class="eyebrow">Не знаешь, что выбрать?</div><p style="margin-top:8px">Шесть вопросов — и три растения под твое окно и вайб.</p><p style="margin-top:10px"><a class="btn" href="@/podbor/">Пройти квиз</a></p></div>
+{BOT_CARD}</aside>
+</div>
+</div>
+'''
+    return meta, body
+
+
+PROBLEMS = json.load(open(os.path.join(SRC, 'data', 'problems.json'), encoding='utf-8'))
+PLANT_BY = {p['slug']: p for p in PLANTS}
+PROB_NAME = {p['slug']: p['card'] for p in PROBLEMS}
+PROB_NAME['zhelteyut-listya'] = 'Желтеют листья'
+BOT_URL = CFG.get('telegram_bot') or 'https://t.me/VsoshloBot'
+BOT_CARD = (f'<div class="card bot-card"><div class="eyebrow">Напоминалка в Telegram</div>'
+            f'<p style="margin-top:8px">Бот напомнит проверить грунт — поливать по потребности, а не по графику.</p>'
+            f'<p style="margin-top:10px"><a class="btn" href="{BOT_URL}" target="_blank" rel="noopener">Открыть бота</a></p></div>')
+
+
+def problems_grid():
+    cards = ['<a class="card" href="@/chto-s-rasteniem/zhelteyut-listya/"><span class="dot y"></span><h2 style="font-size:21px;font-weight:800">Желтеют листья</h2>'
+             '<span class="desc">Перелив, мало света или старые нижние листья</span></a>']
+    for p in PROBLEMS:
+        cards.append(f'<a class="card" href="@/chto-s-rasteniem/{p["slug"]}/"><span class="dot {p["dot"]}"></span>'
+                     f'<h2 style="font-size:21px;font-weight:800">{esc(p["card"])}</h2><span class="desc">{esc(p["cdesc"])}</span></a>')
+    return '<div class="grid">' + ''.join(cards) + '</div>'
+
+
+def plant_problems(slug):
+    return [p for p in PROBLEMS if slug in p['plants']]
+
+
+def problem_page(p):
+    url = f'/chto-s-rasteniem/{p["slug"]}/'
+    meta = {'url': url, 'title': p['title'] + ' | Взошло!', 'description': p['desc'],
+            'crumbs': [['Что с растением?', '/chto-s-rasteniem/'], [p['card'], url]]}
+    causes = []
+    for i, (t, how, do) in enumerate(p['causes']):
+        causes.append(f'<article class="card cause"><div class="n">{i + 1}</div><div><h2>{esc(t)}</h2>'
+                      f'<p><span class="k">Как понять: </span>{esc(how)}</p><p><span class="k">Что делать: </span>{esc(do)}</p></div></article>')
+        if i == 1:
+            causes.append('{{ad:article}}')
+    plan = ''.join(f'<li>{esc(s)}</li>' for s in p['plan'])
+    prev = ''.join(f'<li>{esc(s)}</li>' for s in p['prev'])
+    facts = ''.join(f'<li>{esc(s)}</li>' for s in p['facts'])
+    srcs = ''.join(f'<li><a href="{esc(u)}" target="_blank" rel="noopener">{esc(t)}</a></li>' for t, u in p['src'])
+    rel = ''.join(f'<a class="card" href="@/chto-s-rasteniem/{s}/"><strong>{esc(PROB_NAME[s])}</strong></a>' for s in p['rel'])
+    plants = ''.join(
+        f'<a class="rel" href="@/rasteniya/{s}/"><img src="@/assets/img/plants/{s}.webp" alt="" width="48" height="48" loading="lazy">'
+        f'<span><strong>{esc(PLANT_BY[s]["n"])}</strong><span class="desc">{esc(PLANT_BY[s]["desc"])}</span></span></a>'
+        for s in p['plants'] if s in PLANT_BY)
+    body = f'''<div class="wrap">
+<div class="page-head">{{{{crumbs}}}}
+<div class="eyebrow">Разбор симптома</div>
+<h1>{esc(p["h1"])}</h1>
+<p class="lead">{esc(p["lead"])}</p>
+</div>
+<div class="with-aside section">
+<div style="display:flex;flex-direction:column;gap:16px">
+<section class="card note"><h2 style="font-size:21px">Проверь за минуту</h2><p style="margin-top:8px">{esc(p["check"])}</p></section>
+<h2 style="margin-top:8px">Причины по порядку</h2>
+{chr(10).join(causes)}
+<section class="card"><h2>Профилактика</h2><ul class="plist">{prev}</ul></section>
+<section class="card"><h2>Интересно</h2><ul class="plist">{facts}</ul></section>
+<section class="card"><h2>Источники</h2><p class="desc" style="margin-top:6px">Разбор собран по справочникам университетских служб и RHS. Средства бери с пометкой «для комнатных растений» и работай строго по инструкции.</p><ul class="plist">{srcs}</ul></section>
+<h2 style="margin-top:8px">Похожие проблемы</h2>
+<div class="grid">{rel}<a class="card" href="@/chto-s-rasteniem/"><strong>Все симптомы →</strong></a></div>
+{{{{ad:feed}}}}
+</div>
+<aside class="sticky">
+<div class="card"><div class="eyebrow">План действий</div><ul class="plan">{plan}</ul></div>
+{'<div class="card"><div class="eyebrow">Бывает у растений из каталога</div><div class="rel-list">' + plants + '</div></div>' if plants else ''}
+{BOT_CARD}
+</aside>
 </div>
 </div>
 '''
@@ -351,6 +429,7 @@ def main():
     }
     extra['plants_grid'] = plants_grid()
     extra['quiz_json'] = quiz_json()
+    extra['problems_grid'] = problems_grid()
     pages = []
     for name in sorted(os.listdir(os.path.join(SRC, 'pages'))):
         if name.endswith('.html'):
@@ -359,6 +438,9 @@ def main():
     for p in PLANTS:
         meta, body = plant_page(p)
         pages.append(('plant:' + p['slug'], meta, body))
+    for p in PROBLEMS:
+        meta, body = problem_page(p)
+        pages.append(('problem:' + p['slug'], meta, body))
     urls = []
     for name, meta, body in pages:
         url = meta['url']
