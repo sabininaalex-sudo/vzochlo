@@ -56,6 +56,14 @@ ICON_MENU = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
 THEME_BOOT = "<script>(function(){try{var t=localStorage.getItem('vz-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}})()</script>"
 
 
+import hashlib
+
+
+def ver(rel):
+    """Короткий хэш файла: меняется при правке, и браузер сразу берет свежую версию."""
+    return hashlib.md5(open(os.path.join(SRC, 'assets', rel), 'rb').read()).hexdigest()[:8]
+
+
 def esc(s):
     return html.escape(s, quote=True)
 
@@ -164,10 +172,10 @@ def layout(meta, body, root, extra_css):
         '<link rel="preconnect" href="https://fonts.googleapis.com">',
         '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
         '<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">',
-        f'<link rel="stylesheet" href="{root}assets/css/site.css">',
+        f'<link rel="stylesheet" href="{root}assets/css/site.css?v={ver("css/site.css")}">',
     ]
     if extra_css:
-        head.append(f'<link rel="stylesheet" href="{root}assets/css/{extra_css}">')
+        head.append(f'<link rel="stylesheet" href="{root}assets/css/{extra_css}?v={ver("css/" + extra_css)}">')
     head.append(THEME_BOOT)
     if not is404:
         head.append(jsonld(meta).rstrip())
@@ -208,7 +216,7 @@ def layout(meta, body, root, extra_css):
 {main}
 </main>
 {footer}
-<script src="{root}assets/js/site.js" defer></script>
+<script src="{root}assets/js/site.js?v={ver('js/site.js')}" defer></script>
 </body>
 </html>
 '''
