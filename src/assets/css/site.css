@@ -320,3 +320,21 @@ input[type="time"]::-webkit-calendar-picker-indicator { opacity: .6; cursor: poi
 input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
 select option { color: #1A2A1F; background: #FFFFFF; }
+input[type="date"] { -webkit-appearance: none; appearance: none; font: 17px/1.2 Onest, sans-serif; background-color: var(--input); color: var(--input-text); border: 1px solid var(--input-line); border-radius: 999px; padding: 15px 18px; width: 100%; min-width: 0; min-height: 52px; }
+input[type="date"][readonly] { opacity: .8; }
+.cal table { min-width: 900px; border-spacing: 3px; }
+.cal th[colspan] { text-align: left; padding-left: 4px; }
+.cal td.lbl { white-space: normal; min-width: 210px; font-size: 14px; }
+.cal td.lbl .desc { font-size: 12.5px; }
+.cal td.c.now { outline: 2px solid var(--accent); outline-offset: -2px; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 10px; font-size: 14px; }
+.lg { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; }
+.lg.on-y { background: #F6C453; } .lg.on-g { background: var(--green); } .lg.on-r { background: var(--dot-r); }
+.row2 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (max-width: 520px) { [data-dacha] .row2 { grid-template-columns: minmax(0, 1fr); } }
+.cal td.lbl, .cal thead th:first-child { position: sticky; left: 0; z-index: 1; background: var(--card-solid, var(--bg)); }
+@media (max-width: 700px) {
+  .cal table { min-width: 720px; }
+  .cal td.lbl { min-width: 150px; max-width: 150px; font-size: 13px; line-height: 1.25; }
+  .cal td.lbl .desc { display: block; }
+}

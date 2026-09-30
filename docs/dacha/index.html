@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Когда сажать на даче: календарь дел для средней полосы | Взошло!</title>
-<meta name="description" content="Что делать на даче осенью и по календарю на год: чеснок под зиму, луковичные, сидераты, рассада томатов. Ориентиры для средней полосы.">
+<title>Когда сажать на даче: календарь по датам заморозков для твоего региона | Взошло!</title>
+<meta name="description" content="Календарь посадок от дат заморозков: рассада томатов, огурцы, картофель, морковь, чеснок под зиму. Средняя полоса, Северо-Запад и свой регион по датам заморозков.">
 <meta name="theme-color" content="#FBF6EF" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#2A1F1B" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
@@ -14,14 +14,14 @@
 <meta property="og:site_name" content="Взошло!">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Когда сажать на даче: календарь дел для средней полосы">
-<meta property="og:description" content="Что делать на даче осенью и по календарю на год: чеснок под зиму, луковичные, сидераты, рассада томатов. Ориентиры для средней полосы.">
+<meta property="og:title" content="Когда сажать на даче: календарь по датам заморозков для твоего региона">
+<meta property="og:description" content="Календарь посадок от дат заморозков: рассада томатов, огурцы, картофель, морковь, чеснок под зиму. Средняя полоса, Северо-Запад и свой регион по датам заморозков.">
 <meta property="og:url" content="https://sabininaalex-sudo.github.io/vzoshlo/dacha/">
 <meta property="og:image" content="https://sabininaalex-sudo.github.io/vzoshlo/assets/img/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/site.css?v=cc29894b">
+<link rel="stylesheet" href="../assets/css/site.css?v=8d20916a">
 <script>(function(){try{var t=localStorage.getItem('vz-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}})()</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://sabininaalex-sudo.github.io/vzoshlo/"}, {"@type": "ListItem", "position": 2, "name": "Дача", "item": "https://sabininaalex-sudo.github.io/vzoshlo/dacha/"}]}</script>
 </head>
@@ -41,24 +41,59 @@
 <div class="page-head"><nav class="crumbs" aria-label="Хлебные крошки"><ol><li><a href="../">Главная</a></li><li><span aria-current="page">Дача</span></li></ol></nav>
 <div class="eyebrow">Дача</div>
 <h1>Когда сажать на даче</h1>
-<p class="lead">Что делать сейчас и что по календарю дальше. Сроки — ориентир для средней полосы, точнее подскажет погода на участке.</p>
-<div class="chips" role="group" aria-label="Регион"><button class="chip" type="button" aria-pressed="true">Средняя полоса</button><button class="chip" type="button" disabled title="Скоро">Северо-Запад · скоро</button><button class="chip" type="button" disabled title="Скоро">Урал · скоро</button><button class="chip" type="button" disabled title="Скоро">Сибирь · скоро</button><button class="chip" type="button" disabled title="Скоро">Юг · скоро</button></div>
+<p class="lead">Сроки посадок считаются от двух дат: последнего весеннего и первого осеннего заморозка. Выбери регион или введи даты своего места — календарь пересчитается.</p>
 </div>
-<section class="section">
-<h2>Дела на сентябрь–октябрь</h2>
-<div class="grid">
-<div class="card"><h3>Чеснок под зиму</h3><span class="desc">Сажай за 2–3 недели до того, как почва начнет промерзать</span></div>
-<div class="card"><h3>Луковичные</h3><span class="desc">Тюльпаны и нарциссы — пока земля не замерзла</span></div>
-<div class="card"><h3>Уборка грядок</h3><span class="desc">Убери больные ботву и листья, не отправляй их в компост</span></div>
-<div class="card"><h3>Сидераты</h3><span class="desc">Если грядка свободна — посей горчицу или рожь</span></div>
+<div data-dacha>
+<div class="chips" role="group" aria-label="Регион">
+<button class="chip" type="button" data-reg="msk" aria-pressed="true">Средняя полоса</button>
+<button class="chip" type="button" data-reg="spb" aria-pressed="false">Северо-Запад</button>
+<button class="chip" type="button" data-reg="own" aria-pressed="false">Свой регион: Урал, Сибирь, Юг…</button>
 </div>
-
+<section class="section grid-2">
+<div class="card calc" style="display:flex;flex-direction:column;gap:12px">
+<div class="eyebrow" data-reg-name>Средняя полоса · Москва</div>
+<div class="row2">
+<div><label for="lf" class="desc">Последний весенний заморозок</label><input id="lf" type="date"></div>
+<div><label for="ff" class="desc">Первый осенний заморозок</label><input id="ff" type="date"></div>
+</div>
+<p class="desc" data-reg-src></p>
+</div>
+<div class="card" style="display:flex;flex-direction:column;gap:10px"><div class="eyebrow">Что делать сейчас</div><div data-now aria-live="polite"></div></div>
 </section>
 <section class="section">
 <h2>Календарь на год</h2>
-<div class="card cal"><table><thead><tr><th scope="col"><span class="visually-hidden">Культура</span></th><th scope="col" data-m="1">Янв</th><th scope="col" data-m="2">Фев</th><th scope="col" data-m="3">Мар</th><th scope="col" data-m="4">Апр</th><th scope="col" data-m="5">Май</th><th scope="col" data-m="6">Июн</th><th scope="col" data-m="7">Июл</th><th scope="col" data-m="8">Авг</th><th scope="col" data-m="9">Сен</th><th scope="col" data-m="10">Окт</th><th scope="col" data-m="11">Ноя</th><th scope="col" data-m="12">Дек</th></tr></thead><tbody><tr><td class="lbl">Томаты — посев на рассаду</td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c on-y"><span class="visually-hidden">да</span></td><td class="c on-y"><span class="visually-hidden">да</span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td></tr><tr><td class="lbl">Томаты — высадка</td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c on-g"><span class="visually-hidden">да</span></td><td class="c on-g"><span class="visually-hidden">да</span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td></tr><tr><td class="lbl">Огурцы — посев</td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c on-g"><span class="visually-hidden">да</span></td><td class="c on-g"><span class="visually-hidden">да</span></td><td class="c on-g"><span class="visually-hidden">да</span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td></tr><tr><td class="lbl">Картофель — посадка</td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c on-g"><span class="visually-hidden">да</span></td><td class="c on-g"><span class="visually-hidden">да</span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td></tr><tr><td class="lbl">Чеснок озимый</td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c on-r"><span class="visually-hidden">да</span></td><td class="c on-r"><span class="visually-hidden">да</span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td></tr><tr><td class="lbl">Тюльпаны — посадка</td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td><td class="c on-r"><span class="visually-hidden">да</span></td><td class="c on-r"><span class="visually-hidden">да</span></td><td class="c"><span class="visually-hidden"></span></td><td class="c"><span class="visually-hidden"></span></td></tr></tbody></table>
-<p class="desc" style="margin-top:10px">Ориентир для средней полосы. В других регионах сроки сдвигаются — календари для них готовим.</p></div>
+<div class="card cal"><table data-cal></table>
+<div class="legend desc"><span><i class="lg on-y"></i> посев на рассаду</span><span><i class="lg on-g"></i> посев и посадка в грунт</span><span><i class="lg on-r"></i> посадка под зиму</span></div>
+<p class="desc" style="margin-top:10px">Каждый месяц разбит на две половины. Это ориентир: по погоде на участке сроки сдвигаются, а температуру почвы лучше проверить термометром.</p></div>
 </section>
+
+<section class="section">
+<h2>По каким правилам считаем</h2>
+<div class="grid">
+<div class="card"><h3>Томаты</h3><p class="desc">Посев на рассаду — за 6–8 недель до последнего заморозка (Clemson). Раньше сеять нет смысла: урожай раньше не будет (UMN). В грунт — после заморозков, когда ночи стабильно выше +11 °C, а почва прогрелась до +13 °C (Colorado State). Даже легкий заморозок убивает рассаду.</p></div>
+<div class="card"><h3>Огурцы</h3><p class="desc">В грунт — после последнего заморозка, когда почва на глубине 2,5 см прогрелась до +21 °C: в холодной почве семена не прорастают (UMN). Рассаду сеют не раньше чем за 4 недели до последнего заморозка, в торфяных горшочках.</p></div>
+<div class="card"><h3>Картофель</h3><p class="desc">Посадка — примерно за 2 недели до последнего заморозка, при температуре почвы около +13…+16 °C на глубине 10 см (NDSU).</p></div>
+<div class="card"><h3>Морковь, редис, горох</h3><p class="desc">Холодостойкие: сеять можно за 2–4 недели до последнего заморозка. Прорастают, когда почва на глубине 10 см прогрелась хотя бы до +4 °C (Colorado State).</p></div>
+<div class="card"><h3>Чеснок под зиму</h3><p class="desc">UMN советует сажать через 1–2 недели после первого заморозка и укрыть мульчей 7–10 см. Cornell — раньше, за 6–8 недель до первого заморозка. Календарь показывает вариант UMN, главное — успеть до промерзания почвы.</p></div>
+<div class="card"><h3>Тюльпаны и нарциссы</h3><p class="desc">Сажай, когда почва остыла примерно до +10…+13 °C, и не позже чем за пару недель до ее промерзания (University of Wisconsin). Точную дату от заморозков источники не дают, поэтому в календаре их нет — ориентируйся на термометр.</p></div>
+</div>
+</section>
+<section class="section">
+<div class="card"><h2>Источники</h2><ul class="plist">
+<li><a href="https://hgic.clemson.edu/factsheet/tomato/" target="_blank" rel="noopener">Clemson HGIC: томаты</a></li>
+<li><a href="https://extension.umn.edu/vegetables/growing-tomatoes" target="_blank" rel="noopener">UMN Extension: томаты</a></li>
+<li><a href="https://cmg.extension.colostate.edu/Gardennotes/717.pdf" target="_blank" rel="noopener">Colorado State: CMG GardenNotes #717</a></li>
+<li><a href="https://extension.umn.edu/vegetables/growing-cucumbers" target="_blank" rel="noopener">UMN Extension: огурцы</a></li>
+<li><a href="https://www.ag.ndsu.edu/news/columns/dakota-gardener/dakota-gardener-how-to-plant-potatoes" target="_blank" rel="noopener">NDSU: картофель</a></li>
+<li><a href="https://extension.colostate.edu/?p=17983" target="_blank" rel="noopener">Colorado State: холодостойкие овощи</a></li>
+<li><a href="https://extension.umn.edu/vegetables/growing-garlic" target="_blank" rel="noopener">UMN Extension: чеснок</a></li>
+<li><a href="https://cceschoharie-otsego.org/gardening/food-gardening/guide-for-growing-garlic" target="_blank" rel="noopener">Cornell Cooperative Extension: чеснок</a></li>
+<li><a href="https://hort.extension.wisc.edu/2021/10/06/planting-spring-bulbs/" target="_blank" rel="noopener">University of Wisconsin: луковичные</a></li>
+<li><a href="https://ru.wikipedia.org/wiki/Климат_Москвы" target="_blank" rel="noopener">Климат Москвы (норма 1971–2000, станция ВВЦ)</a></li>
+<li><a href="https://ru.wikipedia.org/wiki/Климат_Санкт-Петербурга" target="_blank" rel="noopener">Климат Санкт-Петербурга</a></li></ul>
+<p class="desc" style="margin-top:10px">Правила сроков — из справочников университетских служб США. Они сформулированы через даты заморозков, поэтому переносятся на любой климат, если знать эти даты для своего места.</p></div>
+</section>
+</div>
 </div>
 
 </main>
@@ -66,6 +101,6 @@
 <a class="logo" href="../" aria-label="Взошло! — на главную">Взошло<svg viewBox="0 0 120 200" aria-hidden="true"><path class="stem" d="M60 128 C60 108 58 90 60 64" stroke-width="11" stroke-linecap="round" fill="none"/><path class="leaf1" d="M60 66 C40 72 16 60 12 36 C34 26 56 38 60 62 Z"/><path class="leaf2" d="M60 64 C66 36 88 18 112 26 C110 50 86 66 60 64 Z" stroke="none"/><circle cx="60" cy="166" r="22" fill="#E8483A"/></svg></a>
 <nav aria-label="Нижнее меню"><a href="../o-proekte/">О проекте</a><a href="../bezopasno-dlya-koshek/">Растения и кошки</a><a href="../politika-konfidencialnosti/">Политика конфиденциальности</a><a href="https://t.me/VsoshloBot" target="_blank" rel="noopener">Напоминалка в Telegram</a></nav>
 </div></footer>
-<script src="../assets/js/site.js?v=509fb254" defer></script>
+<script src="../assets/js/site.js?v=cf7d2784" defer></script>
 </body>
 </html>

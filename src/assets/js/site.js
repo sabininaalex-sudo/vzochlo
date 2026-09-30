@@ -240,9 +240,74 @@
     [lt, lk, ln].forEach(function (e) { e.addEventListener('change', pcalc2); }); lon.addEventListener('input', pcalc2); pcalc2();
   }
 
-  /* Календарь: подсветить текущий месяц */
-  var m = new Date().getMonth() + 1;
-  $$('.cal th[data-m="' + m + '"]').forEach(function (th) { th.classList.add('now'); });
+  /* Дача: календарь от дат заморозков */
+  var dacha = $('[data-dacha]');
+  if (dacha) {
+    var REG = {
+      msk: { t: 'Средняя полоса · Москва', lf: [5, 10], ff: [9, 29], src: 'Средние даты заморозков в воздухе для Москвы (станция ВВЦ, норма 1971–2000) по статье «Климат Москвы»; данные «Погоды и климата». По новой норме безморозный период длиннее, так что даты с запасом. За городом заморозки обычно позже весной и раньше осенью.' },
+      spb: { t: 'Северо-Запад · Санкт-Петербург', lf: [5, 5], ff: [10, 10], src: 'Средние даты заморозков по энциклопедии «Санкт-Петербург» (2006). Самый поздний весенний заморозок — 28 мая, самый ранний осенний — 15 сентября. Скорее всего, это городские данные: в пригородах безморозный период короче.' },
+      own: { t: 'Свой регион', lf: null, ff: null, src: 'Введи средние даты последнего весеннего и первого осеннего заморозка для своего места — их публикуют региональные центры по гидрометеорологии. Мы еще не нашли проверенных дат для Урала, Сибири и Юга, поэтому не подставляем их за тебя.' }
+    };
+    var ROWS = [
+      ['Томаты — посев на рассаду', 'lf', -56, -42, 'y'],
+      ['Томаты — в грунт (ночи выше +11 °C)', 'lf', 0, 21, 'g'],
+      ['Огурцы — посев на рассаду', 'lf', -28, -21, 'y'],
+      ['Огурцы — посев в грунт (почва +21 °C)', 'lf', 0, 21, 'g'],
+      ['Картофель — посадка', 'lf', -14, 0, 'g'],
+      ['Морковь, редис, горох — посев', 'lf', -28, -14, 'g'],
+      ['Чеснок под зиму', 'ff', 7, 14, 'r']
+    ];
+    var MON = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+    var MSH = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
+    var yr = new Date().getFullYear(), cur = 'msk';
+    var lfI = $('#lf'), ffI = $('#ff'), cal = $('[data-cal]'), nowBox = $('[data-now]');
+    function iso(md) { return yr + '-' + ('0' + md[0]).slice(-2) + '-' + ('0' + md[1]).slice(-2); }
+    function parse(v) { var p = String(v).split('-'); return p.length === 3 ? new Date(yr, +p[1] - 1, +p[2]) : null; }
+    function add(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
+    function half(d) { return d.getMonth() * 2 + (d.getDate() > 15 ? 1 : 0); }
+    function dstr(d) { return d.getDate() + ' ' + MON[d.getMonth()]; }
+    function draw() {
+      var LF = parse(lfI.value), FF = parse(ffI.value);
+      cal.innerHTML = ''; nowBox.innerHTML = '';
+      if (!LF || !FF) { nowBox.appendChild(mk('p', null, 'Введи обе даты — посчитаем календарь.')); return; }
+      var th = '<thead><tr><th scope="col"><span class="visually-hidden">Культура</span></th>' + MSH.map(function (m, i) { return '<th scope="colgroup" colspan="2" data-m="' + (i + 1) + '">' + m + '</th>'; }).join('') + '</tr></thead>';
+      var today = new Date(), th0 = half(today), body = '', soon = [];
+      ROWS.forEach(function (r) {
+        var base = r[1] === 'lf' ? LF : FF, a = add(base, r[2]), b = add(base, r[3]), ha = half(a), hb = half(b);
+        body += '<tr><td class="lbl">' + r[0] + '<span class="desc"> ' + dstr(a) + '–' + dstr(b) + '</span></td>';
+        for (var i = 0; i < 24; i++) body += '<td class="c' + (i >= ha && i <= hb ? ' on-' + r[4] : '') + (i === th0 ? ' now' : '') + '"><span class="visually-hidden">' + (i >= ha && i <= hb ? 'да' : '') + '</span></td>';
+        body += '</tr>';
+        var days = Math.round((a - today) / 864e5), end = Math.round((b - today) / 864e5);
+        if (end >= 0 && days <= 21) soon.push([r[0], days, a, b]);
+      });
+      cal.innerHTML = th + '<tbody>' + body + '</tbody>';
+      $$('th[data-m="' + (today.getMonth() + 1) + '"]', cal).forEach(function (x) { x.classList.add('now'); });
+      if (soon.length) soon.forEach(function (s) {
+        var p = mk('p'); p.appendChild(mk('b', null, s[0] + ': '));
+        p.appendChild(document.createTextNode(s[1] <= 0 ? 'сейчас, до ' + dstr(s[3]) : 'через ' + s[1] + ' дн., с ' + dstr(s[2])));
+        nowBox.appendChild(p);
+      });
+      else {
+        var next = ROWS.map(function (r) { var base = r[1] === 'lf' ? LF : FF, a = add(base, r[2]); if (a < today) a = new Date(a.getFullYear() + 1, a.getMonth(), a.getDate()); return [r[0], a]; })
+          .sort(function (x, y) { return x[1] - y[1]; })[0];
+        nowBox.appendChild(mk('p', null, 'Посадок по календарю сейчас нет. Следующее дело — ' + next[0].toLowerCase() + ', с ' + dstr(next[1]) + '.'));
+      }
+      nowBox.appendChild(mk('p', 'desc', 'Безморозный период — около ' + Math.round((FF - LF) / 864e5) + ' дней.'));
+    }
+    function setReg(k) {
+      cur = k; var r = REG[k];
+      $$('[data-reg]', dacha).forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-reg') === k)); });
+      $('[data-reg-name]', dacha).textContent = r.t; $('[data-reg-src]', dacha).textContent = r.src;
+      var own = k === 'own';
+      lfI.readOnly = ffI.readOnly = !own;
+      if (own) { lfI.value = store('vz-lf') || ''; ffI.value = store('vz-ff') || ''; }
+      else { lfI.value = iso(r.lf); ffI.value = iso(r.ff); }
+      draw();
+    }
+    [lfI, ffI].forEach(function (el) { el.addEventListener('change', function () { if (cur === 'own') { store('vz-lf', lfI.value); store('vz-ff', ffI.value); } draw(); }); });
+    $$('[data-reg]', dacha).forEach(function (b) { b.addEventListener('click', function () { setReg(b.getAttribute('data-reg')); }); });
+    setReg('msk');
+  }
 
   /* Квиз подбора: условия + вайб */
   var quiz = $('[data-quiz]');
