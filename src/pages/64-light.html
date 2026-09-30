@@ -1,0 +1,46 @@
+<!--meta {"url": "/instrumenty/svet-u-okna/", "title": "Сколько света у окна: калькулятор освещенности для комнатных растений | Взошло!", "description": "Выбери сторону окна и расстояние — узнаешь уровень света по данным Illinois Extension и какие растения из каталога там приживутся. Или введи люксы с люксметра.", "crumbs": [["Инструменты", "/instrumenty/"], ["Свет у окна", "/instrumenty/svet-u-okna/"]]} -->
+<div class="wrap">
+<div class="page-head">{{crumbs}}
+<div class="eyebrow">Свет</div>
+<h1>Сколько света у твоего окна</h1>
+<p class="lead">Свет быстро слабеет с расстоянием от окна: на улице его в сотни раз больше, чем в глубине комнаты. Выбери окно и место — и посмотри, кто там приживется.</p>
+</div>
+<section class="section grid-2">
+<div class="card calc" data-light style="display:flex;flex-direction:column;gap:12px">
+<h2>Окно и расстояние</h2>
+<label for="lt-side" class="desc">Куда смотрит окно</label>
+<select id="lt-side"><option value="s">Юг</option><option value="ew" selected>Восток или запад</option><option value="n">Север</option></select>
+<label for="lt-dist" class="desc">Расстояние от стекла до растения</label>
+<select id="lt-dist"><option value="0">Прямо у окна, до 0,5 м</option><option value="1" selected>0,5–1 м</option><option value="2">1–1,5 м</option><option value="3">1,5–3 м</option><option value="4">3–5 м</option><option value="5">Дальше 5 м</option></select>
+<div data-light-out aria-live="polite" style="display:flex;flex-direction:column;gap:10px"></div>
+</div>
+<div class="card calc" data-lux style="display:flex;flex-direction:column;gap:12px">
+<h2>Есть люксметр?</h2>
+<label for="lux-v" class="desc">Освещенность на уровне листьев днем, лк</label>
+<input id="lux-v" type="number" inputmode="decimal" min="0" max="200000" value="3000">
+<div data-lux-out aria-live="polite"><p class="desc">Введи число — покажем уровень света.</p></div>
+<p class="desc">Шкала UMN Extension: низкий свет 538–2690 лк, средний 2690–10 760 лк, высокий — больше 10 760 лк. Приложения в телефоне дают только грубую оценку (UF/IFAS, Iowa State), а для точности нужен люксметр.</p>
+</div>
+</section>
+<div class="with-aside section">
+<div style="display:flex;flex-direction:column;gap:16px">
+<section class="card"><h2>Кто подходит этому месту</h2><div class="rel-grid" data-light-plants></div></section>
+{{ad:article}}
+<section class="card"><h2>Как читать результат</h2><ul class="plist">
+<li>Таблица окон — по Illinois Extension для ясного окна без деревьев и соседних домов. Балкон, козырек, дерево или соседний дом срезают свет сильнее.</li>
+<li>Зимой света меньше. Colorado State, например, относит место до 60 см от северного окна к среднему свету летом, но к низкому — с октября по март.</li>
+<li>Дальше примерно 3 м от обычного окна света растениям обычно не хватает (University of Missouri).</li>
+<li>Если света мало — <a href="@/instrumenty/fitolampa/">подбери фитолампу</a> или растение из списка для тени.</li></ul></section>
+<section class="card"><h2>Источники</h2><ul class="plist">
+<li><a href="https://extension.illinois.edu/houseplants/lighting" target="_blank" rel="noopener">Illinois Extension: свет для комнатных растений</a></li>
+<li><a href="https://extension.umn.edu/planting-and-growing-guides/lighting-indoor-plants" target="_blank" rel="noopener">UMN Extension: освещение</a></li>
+<li><a href="https://planttalk.colostate.edu/topics/houseplants/1352-interior-plants-light/" target="_blank" rel="noopener">Colorado State: свет в помещении</a></li>
+<li><a href="https://gardeningsolutions.ifas.ufl.edu/plants/houseplants/light-for-houseplants/" target="_blank" rel="noopener">UF/IFAS: свет для комнатных растений</a></li>
+<li><a href="https://extension.missouri.edu/publications/g6515" target="_blank" rel="noopener">University of Missouri Extension</a></li></ul></section>
+</div>
+<aside class="sticky">
+<div class="card note"><div class="eyebrow">Шкалы разные</div><p style="margin-top:8px">Университеты по-разному делят свет на «низкий», «средний» и «высокий»: у UF/IFAS низкий свет начинается от 269 лк, у UMN — от 538 лк. Поэтому результат — ориентир, а не приговор. Главный признак нехватки — растение вытягивается и бледнеет.</p><p style="margin-top:10px"><a href="@/chto-s-rasteniem/vytyagivaetsya/" style="color:var(--accent)">Разбор «Вытягивается и бледнеет» →</a></p></div>
+</aside>
+</div>
+<script type="application/json" id="plants-data">{{plants_json}}</script>
+</div>

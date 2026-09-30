@@ -77,15 +77,167 @@
     });
   }
 
-  /* Размер горшка: новый на 2–3 см шире старого */
+  /* Инструменты: общие помощники */
+  function num(v) { var x = parseFloat(String(v).replace(',', '.')); return isFinite(x) ? x : NaN; }
+  function fmt(x, d) { return (Math.round(x * Math.pow(10, d || 0)) / Math.pow(10, d || 0)).toString().replace('.', ','); }
+  function mk(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  function plantsData() { var n = $('#plants-data'); return n ? JSON.parse(n.textContent) : []; }
+
+  /* Размер горшка: NC State (до 20 см +2,5–5, от 25 см +5–7,5), RHS +5–10 */
   var pot = $('[data-pot]');
   if (pot) {
-    var inp = $('input', pot), out = $('[data-pot-out]', pot);
+    var inp = $('input', pot), out = $('[data-pot-out]', pot), note = $('[data-pot-note]', pot);
     function calc() {
-      var d = parseFloat(String(inp.value).replace(',', '.'));
-      out.textContent = (d > 0 && d < 200) ? ('Бери горшок ' + (Math.round(d) + 2) + '–' + (Math.round(d) + 3) + ' см') : 'Введи диаметр в сантиметрах';
+      var d = num(inp.value);
+      if (!(d > 0 && d < 200)) { out.textContent = 'Введи диаметр в сантиметрах'; return; }
+      var a, b;
+      if (d <= 20) { a = 2.5; b = 5; } else if (d >= 25) { a = 5; b = 7.5; } else { a = 2.5; b = 7.5; }
+      out.textContent = 'Бери горшок ' + fmt(d + a, 1) + '–' + fmt(d + b, 1) + ' см';
+      if (note) note.textContent = (d > 20 && d < 25 ? 'Между правилами NC State для горшков до 20 см (+2,5–5 см) и от 25 см (+5–7,5 см). ' : 'По правилу NC State. ') +
+        'Вариант RHS: ' + fmt(d + 5, 1) + '–' + fmt(d + 10, 1) + ' см, с запасом на 2–3 года.';
+      var vd = $('#vol-d'); if (vd && !vd.dataset.touched) { vd.value = fmt(d + a, 1).replace(',', '.'); vd.dispatchEvent(new Event('input')); }
     }
     inp.addEventListener('input', calc); calc();
+  }
+  var vol = $('[data-vol]');
+  if (vol) {
+    var vd = $('#vol-d'), vh = $('#vol-h'), vo = $('[data-vol-out]', vol);
+    function vcalc() {
+      var D = num(vd.value), H = num(vh.value);
+      if (!(D > 0 && H > 0)) { vo.textContent = 'Введи диаметр и высоту'; return; }
+      var d = D * 0.8, L = Math.PI * H / 12 * (D * D + D * d + d * d) / 1000;
+      vo.textContent = 'Около ' + (L < 2 ? fmt(L, 1) : fmt(Math.round(L * 2) / 2, 1)) + ' л грунта';
+    }
+    vd.addEventListener('input', function (e) { if (e.isTrusted) vd.dataset.touched = '1'; vcalc(); });
+    vh.addEventListener('input', vcalc); vcalc();
+  }
+
+  /* Состав грунта */
+  var soil = $('[data-soil]');
+  if (soil) {
+    var R = {
+      leaf: [
+        { t: 'Торф и перлит поровну', s: 'NC State', p: [['торф', 1], ['перлит', 1]] },
+        { t: 'Торф, перлит и вермикулит 60/20/20', s: 'NC State', p: [['торф', 3], ['перлит', 1], ['вермикулит', 1]] },
+        { t: '2 части торфа, по 1 части перлита и крупного песка', s: 'Clemson', p: [['торф', 2], ['перлит', 1], ['крупный песок', 1]] },
+        { t: 'Торф, сосновая кора и перлит поровну', s: 'Clemson', p: [['торф', 1], ['сосновая кора', 1], ['перлит', 1]] }],
+      cact: [{ t: '2 части грунта на 1 часть гравия', s: 'RHS', p: [['суглинистый грунт (у RHS — John Innes No 2)', 2], ['садовый гравий или крупный песок', 1]], n: 'Сверху RHS советует тонкий слой гравия.' }],
+      epi: [{ t: 'Cornell Epiphytic: кора, торф, перлит поровну', s: 'Clemson', p: [['кора (в рецепте — пихта Дугласа)', 1], ['сфагновый торф', 1], ['перлит', 1]], n: 'В оригинальном рецепте добавляют известь и удобрения. Отдельного рецепта для ароидных источники не дают — этот ближе всего.' }],
+      orch: [],
+      viol: [
+        { t: 'Почва, торф и перлит поровну', s: 'Clemson', p: [['пастеризованная почва', 1], ['торф', 1], ['перлит', 1]] },
+        { t: 'Грунт для фиалок и перлит поровну', s: 'UMN', p: [['покупной грунт для фиалок', 1], ['перлит', 1]], n: 'UMN: pH 6,2–6,5, пересаживать раз в год.' }]
+    };
+    var sg = $('#soil-g'), sl = $('#soil-l'), so = $('[data-soil-out]', soil);
+    function scalc() {
+      so.innerHTML = '';
+      var L = num(sl.value), list = R[sg.value];
+      if (sg.value === 'orch') {
+        so.appendChild(mk('p', null, 'Орхидеям нужен не грунт, а субстрат: кора сосны или пихты, древесный уголь, крупный перлит (Clemson). Точных пропорций источники не дают — проще купить готовую смесь для орхидей.'));
+        so.appendChild(mk('p', 'desc', 'Сфагнум держит влагу у корней и грозит гнилью. Корьевой субстрат меняют примерно раз в 2 года.'));
+        return;
+      }
+      if (!(L > 0)) { so.appendChild(mk('p', null, 'Введи объем в литрах')); return; }
+      list.forEach(function (r) {
+        var box = mk('div', 'recipe'), sum = r.p.reduce(function (a, x) { return a + x[1]; }, 0);
+        box.appendChild(mk('strong', null, r.t)); box.appendChild(mk('span', 'desc', ' · ' + r.s));
+        var ul = mk('ul', 'plist');
+        r.p.forEach(function (x) { ul.appendChild(mk('li', null, x[0] + ' — ' + fmt(L * x[1] / sum, 1) + ' л')); });
+        box.appendChild(ul);
+        if (r.n) box.appendChild(mk('p', 'desc', r.n));
+        so.appendChild(box);
+      });
+    }
+    sg.addEventListener('change', scalc); sl.addEventListener('input', scalc); scalc();
+  }
+  var sp = $('[data-soilplant]');
+  if (sp) {
+    var PL = plantsData(), sel = $('#soil-p'), spo = $('[data-soilplant-out]', sp);
+    PL.forEach(function (p, i) { var o = mk('option', null, p.n); o.value = i; sel.appendChild(o); });
+    function pcalc() {
+      var p = PL[+sel.value]; spo.innerHTML = '';
+      spo.appendChild(mk('p', null, p.soil));
+      var a = mk('a', null, 'Весь уход за растением →'); a.href = ROOT + p.url; a.style.color = 'var(--accent)';
+      var w = mk('p'); w.style.marginTop = '10px'; w.appendChild(a); spo.appendChild(w);
+    }
+    sel.addEventListener('change', pcalc); pcalc();
+  }
+
+  /* Свет у окна: таблица Illinois Extension + шкала UMN */
+  var LV = {
+    direct: ['Прямое солнце', 'Очень ярко: прямые лучи. Подойдет светолюбивым, остальных отодвинь или притени.', 'g', ['bright']],
+    high: ['Высокий свет', 'Ярко. Хорошо светолюбивым и растениям среднего света без прямых полуденных лучей.', 'g', ['bright', 'mid']],
+    mid: ['Средний свет', 'Большинству лиственных растений здесь хорошо, цветущим может не хватить.', 'y', ['mid']],
+    low: ['Низкий свет', 'Выживут теневыносливые. Цветения не жди.', 'y', ['low']],
+    dark: ['Слишком темно', 'Растениям здесь, скорее всего, не хватит света. Переставь ближе к окну или добавь фитолампу.', 'r', []]
+  };
+  var TBL = { s: ['direct', 'high', 'high', 'mid', 'low', 'low'], ew: ['high', 'mid', 'low', 'low', 'dark', 'dark'], n: ['mid', 'low', 'low', 'dark', 'dark', 'dark'] };
+  var light = $('[data-light]'), PLL = plantsData(), plBox = $('[data-light-plants]');
+  function showPlants(lv) {
+    if (!plBox) return;
+    plBox.innerHTML = '';
+    var fit = PLL.filter(function (p) { return LV[lv][3].some(function (x) { return p.light.indexOf(x) >= 0; }); });
+    if (!fit.length) { plBox.appendChild(mk('p', null, 'Ни одно растение из каталога здесь без досветки не порадует.')); return; }
+    fit.forEach(function (p) {
+      var a = mk('a', 'rel'); a.href = ROOT + p.url;
+      var img = mk('img'); img.src = ROOT + 'assets/img/plants/' + p.s + '.webp'; img.alt = ''; img.width = 48; img.height = 48; img.loading = 'lazy';
+      var t = mk('span'); t.appendChild(mk('strong', null, p.n)); t.appendChild(mk('span', 'desc', p.desc));
+      a.appendChild(img); a.appendChild(t); plBox.appendChild(a);
+    });
+  }
+  function renderLevel(box, lv, extra) {
+    box.innerHTML = '';
+    var h = mk('div'); h.appendChild(mk('span', 'tag ' + LV[lv][2], LV[lv][0])); box.appendChild(h);
+    box.appendChild(mk('p', null, LV[lv][1]));
+    if (extra) box.appendChild(mk('p', 'desc', extra));
+    showPlants(lv);
+  }
+  if (light) {
+    var ls = $('#lt-side'), ld = $('#lt-dist'), lo = $('[data-light-out]', light);
+    function lcalc() {
+      var lv = TBL[ls.value][+ld.value];
+      renderLevel(lo, lv, ls.value === 'n' && +ld.value === 0 ? 'У северного окна свет средний только вплотную к стеклу, а зимой — низкий.' : (+ld.value >= 4 ? 'Дальше примерно 3 м от окна света обычно не хватает.' : ''));
+    }
+    ls.addEventListener('change', lcalc); ld.addEventListener('change', lcalc); lcalc();
+  }
+  var lux = $('[data-lux]');
+  if (lux) {
+    var lv2 = $('#lux-v'), lxo = $('[data-lux-out]', lux);
+    lv2.addEventListener('input', function () {
+      var x = num(lv2.value);
+      if (!(x >= 0)) { lxo.textContent = ''; return; }
+      renderLevel(lxo, x > 10760 ? 'high' : x >= 2690 ? 'mid' : x >= 538 ? 'low' : 'dark', 'Это примерно ' + fmt(x / 10.76, 0) + ' фут-свечей.');
+    });
+    lv2.addEventListener('focus', function () { lv2.dispatchEvent(new Event('input')); }, { once: true });
+  }
+
+  /* Фитолампа */
+  var lamp = $('[data-lamp]');
+  if (lamp) {
+    var T = {
+      leaf: { h: [12, 14], d: 'лиственным UMN советует 30–60 см', src: 'UMN' },
+      bloom: { h: [14, 16], d: 'цветущим UMN советует 15–30 см', src: 'UMN' },
+      seed: { h: [16, 18], d: 'рассаде UMN советует 10–15 см', src: 'UMN' },
+      viol: { h: [14, 16], d: 'фиалкам Clemson советует 15–30 см', src: 'UMN, Clemson' }
+    };
+    var lt = $('#lp-t'), lk = $('#lp-k'), ln = $('#lp-n'), lon = $('#lp-on'), lpo = $('[data-lamp-out]', lamp);
+    function tadd(t, h) { var p = t.split(':'); var m = (+p[0] * 60 + +p[1] + h * 60) % 1440; return ('0' + Math.floor(m / 60)).slice(-2) + ':' + ('0' + m % 60).slice(-2); }
+    function pcalc2() {
+      var c = T[lt.value], hrs = c.h.slice();
+      var why = '';
+      if (lt.value !== 'seed') {
+        if (ln.value === 'none') { hrs = [16, 16]; why = 'Без дневного света University of Missouri советует 16–18 ч, но Clemson и Illinois — не больше 16 ч, чтобы осталось 8 ч темноты.'; }
+        else if (lt.value === 'leaf') why = 'При частичном дневном свете University of Missouri тоже называет 12–14 ч.';
+      }
+      var H = hrs[1];
+      lpo.innerHTML = '';
+      var big = mk('strong', 'calc-out', (hrs[0] === hrs[1] ? hrs[0] : hrs[0] + '–' + hrs[1]) + ' ч в сутки'); lpo.appendChild(big);
+      lpo.appendChild(mk('p', null, 'Включай в ' + (lon.value || '08:00') + ', выключай в ' + tadd(lon.value || '08:00', H) + '. Темный период — ' + (24 - H) + ' ч.'));
+      lpo.appendChild(mk('p', null, 'Расстояние до листьев: ' + c.d + '. ' + 'Общий ориентир Iowa State по типу лампы: ' + (lk.value === 'led' ? 'светодиодные обычно 30–60 см.' : 'люминесцентные 15–30 см.') + ' Точнее — по инструкции к лампе.'));
+      if (why) lpo.appendChild(mk('p', 'desc', why));
+      lpo.appendChild(mk('p', 'desc', 'Источник: ' + c.src + ', Iowa State.'));
+    }
+    [lt, lk, ln].forEach(function (e) { e.addEventListener('change', pcalc2); }); lon.addEventListener('input', pcalc2); pcalc2();
   }
 
   /* Календарь: подсветить текущий месяц */

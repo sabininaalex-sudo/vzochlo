@@ -1,0 +1,54 @@
+<!--meta {"url": "/instrumenty/grunt/", "title": "Грунт для комнатных растений: состав и калькулятор смеси | Взошло!", "description": "Рецепты грунта для лиственных, кактусов и суккулентов, орхидей, эпифитов и фиалок по NC State, Clemson, RHS и UMN — и сколько литров каждого компонента взять под твой горшок.", "crumbs": [["Инструменты", "/instrumenty/"], ["Состав грунта", "/instrumenty/grunt/"]]} -->
+<div class="wrap">
+<div class="page-head">{{crumbs}}
+<div class="eyebrow">Грунт</div>
+<h1>Состав грунта для комнатных растений</h1>
+<p class="lead">Выбери тип растения и объем — калькулятор разложит рецепт на литры. Рецепты взяты из справочников NC State, Clemson, RHS и UMN.</p>
+</div>
+<section class="section grid-2">
+<div class="card calc" data-soil style="display:flex;flex-direction:column;gap:12px">
+<h2>Калькулятор смеси</h2>
+<label for="soil-g" class="desc">Для кого смесь</label>
+<select id="soil-g">
+<option value="leaf">Лиственные комнатные растения</option>
+<option value="cact">Кактусы и суккуленты</option>
+<option value="epi">Эпифиты и ароидные (антуриум, монстера, филодендрон)</option>
+<option value="orch">Орхидеи</option>
+<option value="viol">Узамбарские фиалки</option>
+</select>
+<label for="soil-l" class="desc">Сколько нужно смеси, л <a href="@/instrumenty/gorshok/" style="color:var(--accent)">(посчитать по горшку)</a></label>
+<input id="soil-l" type="number" inputmode="decimal" min="0.1" max="500" value="3">
+<div data-soil-out aria-live="polite" style="display:flex;flex-direction:column;gap:12px"></div>
+</div>
+<div class="card calc" style="display:flex;flex-direction:column;gap:12px" data-soilplant>
+<h2>Грунт для моего растения</h2>
+<label for="soil-p" class="desc">Растение из каталога</label>
+<select id="soil-p"></select>
+<div data-soilplant-out aria-live="polite"></div>
+</div>
+</section>
+<div class="with-aside section">
+<div style="display:flex;flex-direction:column;gap:16px">
+<section class="card"><h2>Кто за что отвечает</h2><ul class="plist">
+<li><b>Торф и кокос</b> — держат воду и питание.</li>
+<li><b>Перлит и вермикулит</b> — дают воздух и дренаж. В перлите есть фтор: для хлорофитума, драцены и калатеи его лучше не брать или брать меньше. <a href="@/chto-s-rasteniem/sohnut-konchiki-listev/">Почему сохнут кончики →</a></li>
+<li><b>Кора и песок</b> — структура и дренаж. Чтобы песок заметно ускорил дренаж, его нужно почти половина объема (Colorado State).</li>
+<li><b>Известь</b> — регулирует кислотность торфяных смесей.</li></ul></section>
+{{ad:article}}
+<section class="card"><h2>Почему не садовая земля</h2><p style="margin-top:8px">В горшке она держит слишком много воды, в ней мало воздуха, она тяжелая и может принести болезни, вредителей и семена сорняков (NC State). Бери покупной грунт. Если все же используешь свою землю, Clemson советует прогреть ее в духовке, пока самая холодная точка не нагреется до 82 °C, и держать так 30 минут.</p></section>
+<section class="card"><h2>Источники</h2><ul class="plist">
+<li><a href="https://content.ces.ncsu.edu/extension-gardener-handbook/18-plants-grown-in-containers" target="_blank" rel="noopener">NC State Extension Gardener Handbook</a></li>
+<li><a href="https://hgic.clemson.edu/factsheet/indoor-plants-soil-mixes/" target="_blank" rel="noopener">Clemson HGIC: смеси для комнатных растений</a></li>
+<li><a href="https://www.rhs.org.uk/plants/types/cacti-succulents/houseplants/growing-guide" target="_blank" rel="noopener">RHS: кактусы и суккуленты</a></li>
+<li><a href="https://hgic.clemson.edu/repotting-your-orchid/" target="_blank" rel="noopener">Clemson HGIC: пересадка орхидей</a></li>
+<li><a href="https://hgic.clemson.edu/factsheet/african-violet/" target="_blank" rel="noopener">Clemson HGIC: фиалки</a></li>
+<li><a href="https://extension.umn.edu/houseplants/african-violets" target="_blank" rel="noopener">UMN Extension: фиалки</a></li>
+<li><a href="https://planttalk.colostate.edu/topics/houseplants/1316-houseplants-repotting/" target="_blank" rel="noopener">Colorado State: пересадка</a></li></ul></section>
+</div>
+<aside class="sticky">
+<div class="card note"><div class="eyebrow">Проще всего</div><p style="margin-top:8px">Для большинства лиственных растений подойдет хороший покупной грунт для комнатных растений. Смешивать самому имеет смысл, когда растению нужен особый грунт: кактусам, орхидеям, эпифитам.</p></div>
+<div class="card"><div class="eyebrow">Пересадка</div><p style="margin-top:8px"><a href="@/instrumenty/gorshok/" style="color:var(--accent)">Какой горшок брать →</a></p></div>
+</aside>
+</div>
+<script type="application/json" id="plants-data">{{plants_json}}</script>
+</div>

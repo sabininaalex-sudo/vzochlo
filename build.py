@@ -87,6 +87,7 @@ def expand(body, root, extra):
     body = body.replace('{{contact}}', extra['contact'])
     body = body.replace('{{plants_grid}}', extra['plants_grid'])
     body = body.replace('{{quiz_json}}', extra['quiz_json'])
+    body = body.replace('{{plants_json}}', extra.get('plants_json', ''))
     body = body.replace('{{problems_grid}}', extra.get('problems_grid', ''))
     body = body.replace('{{bot_url}}', BOT_URL)
     body = body.replace('{{operator}}', esc(CFG.get('operator_name') or 'владелец сайта'))
@@ -265,6 +266,12 @@ def quiz_json():
     return json.dumps(out, ensure_ascii=False).replace('</', '<\\/')
 
 
+def plants_json():
+    out = [dict(n=p['n'], s=p['slug'], url='rasteniya/' + p['slug'] + '/', light=p['quiz']['light'], soil=p['soil'], desc=p['desc'])
+           for p in sorted(PLANTS, key=lambda x: x['n'])]
+    return json.dumps(out, ensure_ascii=False).replace('</', '<\\/')
+
+
 def related(p):
     def sim(o):
         return len(set(o['tags']) & set(p['tags'])) + (o['cat'] == p['cat']) * 0.5
@@ -429,6 +436,7 @@ def main():
     }
     extra['plants_grid'] = plants_grid()
     extra['quiz_json'] = quiz_json()
+    extra['plants_json'] = plants_json()
     extra['problems_grid'] = problems_grid()
     pages = []
     for name in sorted(os.listdir(os.path.join(SRC, 'pages'))):

@@ -1,0 +1,49 @@
+<!--meta {"url": "/instrumenty/fitolampa/", "title": "Фитолампа для комнатных растений: сколько часов светить и на каком расстоянии | Взошло!", "description": "Калькулятор досветки: часы света, расстояние от лампы до листьев и время включения для лиственных, цветущих растений, рассады и фиалок — по UMN, Iowa State и Clemson.", "crumbs": [["Инструменты", "/instrumenty/"], ["Фитолампа", "/instrumenty/fitolampa/"]]} -->
+<div class="wrap">
+<div class="page-head">{{crumbs}}
+<div class="eyebrow">Досветка</div>
+<h1>Фитолампа: сколько светить и на каком расстоянии</h1>
+<p class="lead">Выбери, что досвечиваешь и какая у тебя лампа — калькулятор подскажет часы, расстояние до листьев и когда выключать.</p>
+</div>
+<section class="section grid-2">
+<div class="card calc" data-lamp style="display:flex;flex-direction:column;gap:12px">
+<h2>Калькулятор досветки</h2>
+<label for="lp-t" class="desc">Что досвечиваем</label>
+<select id="lp-t"><option value="leaf">Лиственные растения</option><option value="bloom">Цветущие растения</option><option value="seed">Рассада и зелень</option><option value="viol">Узамбарские фиалки</option></select>
+<label for="lp-k" class="desc">Лампа</label>
+<select id="lp-k"><option value="led">Светодиодная (LED)</option><option value="fl">Люминесцентная</option></select>
+<label for="lp-n" class="desc">Естественный свет у места</label>
+<select id="lp-n"><option value="part">Есть, но мало</option><option value="none">Почти нет</option></select>
+<label for="lp-on" class="desc">Включаю в</label>
+<input id="lp-on" type="time" value="08:00">
+<div data-lamp-out aria-live="polite" style="display:flex;flex-direction:column;gap:10px"></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<section class="card"><h2>Какую лампу брать</h2><ul class="plist">
+<li><b>Светодиодная</b> — дороже при покупке, но заметно экономит энергию и почти не греется (UF/IFAS, UMN).</li>
+<li><b>Люминесцентная</b> — дешевле, но служит меньше (UMN). Хорошо работают лампы «cool white» (UF/IFAS).</li>
+<li><b>Спектр</b>: для большинства подходит белый свет полного спектра. Чем меньше кельвинов, тем краснее свет: UMaine указывает 4000–10 000 K для роста листьев и более теплый свет для цветения.</li>
+<li><b>Лампа накаливания не подходит</b>: неэффективна, сильно греет, растения под ней вытягиваются.</li></ul></section>
+<section class="card"><h2>Темнота тоже нужна</h2><p style="margin-top:8px">Растениям нужен темный период: Clemson советует цикл 16 часов света и 8 часов темноты, Illinois — не больше 16 часов света. Проще всего поставить таймер (розетку с таймером), чтобы не зависеть от памяти.</p></section>
+</div>
+</section>
+<div class="with-aside section">
+<div style="display:flex;flex-direction:column;gap:16px">
+{{ad:article}}
+<section class="card"><h2>Источники расходятся — это нормально</h2><p style="margin-top:8px">UMN дает лиственным 12–14 часов, Clemson — 16, UMaine — 16–18 для большинства растений. University of Missouri объясняет разницу: при частичном естественном свете хватает 12–14 часов, без него — 16–18. Поэтому калькулятор спрашивает, есть ли у места дневной свет.</p></section>
+<section class="card"><h2>Растения короткого дня</h2><p style="margin-top:8px">Декабристу, каланхоэ и пуансеттии для цветения нужны длинные темные ночи. Вечером досветка сбивает им закладку бутонов. <a href="@/chto-s-rasteniem/ne-cvetet/">Почему растение не цветет →</a></p></section>
+<section class="card"><h2>Источники</h2><ul class="plist">
+<li><a href="https://extension.umn.edu/planting-and-growing-guides/lighting-indoor-plants" target="_blank" rel="noopener">UMN Extension: освещение</a></li>
+<li><a href="https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/how-set-supplemental-lights-indoor-plants" target="_blank" rel="noopener">Iowa State: как установить досветку</a></li>
+<li><a href="https://hgic.clemson.edu/factsheet/indoor-plants-cleaning-fertilizing-containers-light-requirements/" target="_blank" rel="noopener">Clemson HGIC: свет</a></li>
+<li><a href="https://extension.missouri.edu/publications/g6515" target="_blank" rel="noopener">University of Missouri Extension</a></li>
+<li><a href="https://extension.umaine.edu/publications/2614e/" target="_blank" rel="noopener">UMaine Extension</a></li>
+<li><a href="https://extension.illinois.edu/houseplants/lighting" target="_blank" rel="noopener">Illinois Extension</a></li>
+<li><a href="https://extension.umn.edu/houseplants/african-violets" target="_blank" rel="noopener">UMN Extension: фиалки</a></li>
+<li><a href="https://gardeningsolutions.ifas.ufl.edu/plants/houseplants/light-for-houseplants/" target="_blank" rel="noopener">UF/IFAS</a></li></ul></section>
+</div>
+<aside class="sticky">
+<div class="card"><div class="eyebrow">Сначала проверь окно</div><p style="margin-top:8px">Может, лампа и не нужна — достаточно переставить горшок.</p><p style="margin-top:10px"><a class="btn" href="@/instrumenty/svet-u-okna/">Сколько света у окна</a></p></div>
+</aside>
+</div>
+</div>
