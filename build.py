@@ -85,6 +85,8 @@ def expand(body, root, extra):
     body = body.replace('{{cats_json}}', extra['cats_json'])
     body = body.replace('{{cats_tiles}}', extra['cats_tiles'])
     body = body.replace('{{contact}}', extra['contact'])
+    body = body.replace('{{plants_grid}}', extra['plants_grid'])
+    body = body.replace('{{quiz_json}}', extra['quiz_json'])
     body = body.replace('{{operator}}', esc(CFG.get('operator_name') or 'владелец сайта'))
     body = body.replace('{{today}}', date.today().strftime('%d.%m.%Y'))
 
@@ -210,11 +212,6 @@ def layout(meta, body, root, extra_css):
 
 def cats_extra():
     data = json.load(open(os.path.join(SRC, 'partials', 'cats-data.json'), encoding='utf-8'))
-    slugs = {'Хлорофитум': 'hlorofitum', 'Калатея': 'kalateya', 'Пеперомия': 'peperomiya', 'Орхидея фаленопсис': 'orhideya-falenopsis',
-             'Нефролепис': 'nefrolepis', 'Монстера': 'monstera', 'Спатифиллум': 'spatifillum', 'Сансевиерия': 'sansevieriya',
-             'Фикус Бенджамина': 'fikus-bendzhamina', 'Антуриум': 'anturium', 'Драцена': 'dracena', 'Замиокулькас': 'zamiokulkas'}
-    for p in data:
-        p['s'] = slugs[p['n']]
     dot = {'safe': 'g', 'toxic': 'r', 'care': 'y'}
     word = {'safe': 'безопасно', 'toxic': 'ядовито', 'care': 'осторожно'}
     tiles = ''.join(
@@ -223,6 +220,120 @@ def cats_extra():
         f'<span class="visually-hidden">— {word[p["v"]]}</span></button>'
         for i, p in enumerate(data))
     return json.dumps(data, ensure_ascii=False).replace('</', '<\\/'), tiles
+
+
+PLANTS = json.load(open(os.path.join(SRC, 'data', 'plants.json'), encoding='utf-8'))
+TAG_WORD = {'new': ('Для новичков', 'g'), 'cat': ('Можно с котом', 'g'), 'shade': ('Тень', 'y'), 'bloom': ('Цветет', 'y'), 'light': ('Светолюбивое', 'y')}
+CAT_WORD = {'safe': ('Безопасно для кошек', 'g', 'Безопасно'), 'toxic': ('Ядовито для кошек', 'r', 'Ядовито'), 'care': ('Кошкам — осторожно', 'y', 'Осторожно')}
+LEVEL_CLS = {'Для новичков': 'g', 'Средняя': 'y'}
+
+
+def plant_img_size(slug):
+    """Ширина и высота webp без сторонних библиотек (VP8/VP8L/VP8X)."""
+    b = open(os.path.join(SRC, 'assets', 'img', 'plants', slug + '.webp'), 'rb').read(40)
+    kind = b[12:16]
+    if kind == b'VP8X':
+        return 1 + int.from_bytes(b[24:27], 'little'), 1 + int.from_bytes(b[27:30], 'little')
+    if kind == b'VP8L':
+        v = int.from_bytes(b[21:25], 'little')
+        return (v & 0x3FFF) + 1, ((v >> 14) & 0x3FFF) + 1
+    return int.from_bytes(b[26:28], 'little') & 0x3FFF, int.from_bytes(b[28:30], 'little') & 0x3FFF
+
+
+def plants_grid():
+    cards = []
+    for p in sorted(PLANTS, key=lambda x: x['n']):
+        tags = ''.join(f'<span class="tag {TAG_WORD[t][1]}">{TAG_WORD[t][0]}</span>' for t in p['tags'] if t in ('new', 'cat'))
+        if p['cat'] == 'toxic':
+            tags += '<span class="tag r">Ядовито для кошек</span>'
+        cards.append(
+            f'<a class="card plant-card" href="@/rasteniya/{p["slug"]}/" data-tags="{" ".join(p["tags"])}">'
+            f'<div class="pic"><img src="@/assets/img/plants/{p["slug"]}.webp" alt="{esc(p["n"])}" width="200" height="200" loading="lazy"></div>'
+            f'<h2>{esc(p["n"])}</h2><span class="desc">{esc(p["desc"])}</span><div class="tags">{tags}</div></a>')
+    return '<div class="grid">' + ''.join(cards) + '</div>'
+
+
+def quiz_json():
+    out = []
+    for p in PLANTS:
+        q = dict(p['quiz'])
+        q.update(n=p['n'], s=p['slug'], url='rasteniya/' + p['slug'] + '/', cat=p['cat'] == 'safe')
+        out.append(q)
+    return json.dumps(out, ensure_ascii=False).replace('</', '<\\/')
+
+
+def related(p):
+    def sim(o):
+        return len(set(o['tags']) & set(p['tags'])) + (o['cat'] == p['cat']) * 0.5
+    others = [o for o in PLANTS if o['slug'] != p['slug']]
+    others.sort(key=lambda o: -sim(o))
+    return others[:3]
+
+
+def plant_page(p):
+    url = f'/rasteniya/{p["slug"]}/'
+    cw = CAT_WORD[p['cat']]
+    aka = f' ({p["aka"]})' if p.get('aka') else ''
+    desc = (f'{p["n"]}{aka}: свет, полив, влажность, температура, пересадка и размножение, частые беды. '
+            f'{cw[2]} для кошек — с источником.')
+    meta = {'url': url, 'title': p['title'] + ' | Взошло!', 'description': desc,
+            'crumbs': [['Растения А–Я', '/rasteniya/'], [p['n'], url]]}
+    w, h = plant_img_size(p['slug'])
+    lvl = f'<span class="tag {LEVEL_CLS.get(p["level"], "r")}">{esc(p["level"])}</span>'
+    tags = lvl + f'<span class="tag {cw[1]}">{cw[0]}</span>' + ''.join(
+        f'<span class="tag {TAG_WORD[t][1]}">{TAG_WORD[t][0]}</span>' for t in p['tags'] if t in ('shade', 'bloom', 'light'))
+    aka_line = f'<div class="desc">Еще называют: {esc(p["aka"])}</div>' if p.get('aka') else ''
+    sec = lambda title, text: f'<section class="card"><h2>{title}</h2><p style="margin-top:8px">{esc(text)}</p></section>'
+    probs = ''.join(f'<li><b>{esc(a)}</b> — {esc(b)}</li>' for a, b in p['probs'])
+    facts = ''.join(f'<li>{esc(f)}</li>' for f in p['facts'])
+    srcs = ''.join(f'<li><a href="{esc(u)}" target="_blank" rel="noopener">{esc(t)}</a></li>' for t, u in p['src'])
+    srcs += f'<li><a href="{esc(p["cat_url"])}" target="_blank" rel="noopener">ASPCA — растения и кошки</a></li>'
+    rel = ''.join(
+        f'<a class="rel" href="@/rasteniya/{o["slug"]}/"><img src="@/assets/img/plants/{o["slug"]}.webp" alt="" width="48" height="48" loading="lazy">'
+        f'<span><strong>{esc(o["n"])}</strong><span class="desc">{esc(o["desc"])}</span></span></a>' for o in related(p))
+    yellow = any('елт' in a for a, _ in p['probs'])
+    body = f'''<div class="wrap">
+<div class="page-head">{{{{crumbs}}}}</div>
+<div class="profile-top">
+<div class="profile-pic"><img src="@/assets/img/plants/{p["slug"]}.webp" alt="{esc(p["n"])} в терракотовом горшке" width="{w}" height="{h}"></div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<div class="eyebrow">Профиль растения</div>
+<h1>{esc(p["n"])}</h1>
+<div class="latin">{esc(p["latin"])}</div>
+{aka_line}
+<div class="tags">{tags}</div>
+<div class="facts">
+<div class="card"><div class="k">Свет</div><div class="v">{esc(p["q_light"])}</div></div>
+<div class="card"><div class="k">Полив</div><div class="v">{esc(p["q_water"])}</div></div>
+<div class="card"><div class="k">Сложность</div><div class="v">{esc(p["level"])}</div></div>
+<div class="card"><div class="k">Кошки</div><div class="v">{cw[2]} (<a href="{esc(p["cat_url"])}" target="_blank" rel="noopener">ASPCA</a>)</div></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn" href="@/instrumenty/poliv/">Как поливать</a><a class="btn-ghost" href="@/chto-s-rasteniem/">Что-то не так?</a></div>
+</div>
+</div>
+<div class="with-aside section">
+<div style="display:flex;flex-direction:column;gap:16px">
+{sec("Характер", p["char"])}
+{sec("Свет", p["light"])}
+{sec("Полив", p["water"])}
+{{{{ad:article}}}}
+{sec("Влажность", p["hum"])}
+{sec("Температура", p["temp"])}
+{sec("Грунт и пересадка", p["soil"])}
+{sec("Размножение", p["prop"])}
+<section class="card"><h2>Частые беды</h2><ul class="plist">{probs}</ul>{'<p style="margin-top:10px"><a href="@/chto-s-rasteniem/zhelteyut-listya/" style="color:var(--accent)">Подробно: почему желтеют листья →</a></p>' if yellow else ''}</section>
+<section class="card"><h2>Интересно</h2><ul class="plist">{facts}</ul></section>
+<section class="card"><h2>{esc(p["n"])} и кошки</h2><p style="margin-top:8px"><span class="tag {cw[1]}">{cw[2]}</span></p><p style="margin-top:8px">{esc(p["cat_note"])}</p><p style="margin-top:8px"><a href="@/bezopasno-dlya-koshek/" style="color:var(--accent)">Проверить другие растения →</a></p></section>
+<section class="card"><h2>Источники</h2><p class="desc" style="margin-top:6px">Факты взяты из справочников университетских служб, RHS и базы ASPCA. Где источники расходятся, мы так и пишем.</p><ul class="plist">{srcs}</ul></section>
+{{{{ad:feed}}}}
+</div>
+<aside class="sticky"><div class="card"><div class="eyebrow">Похожие по характеру</div><div class="rel-list">{rel}</div>
+<p style="margin-top:10px"><a href="@/rasteniya/" style="color:var(--accent)">Весь каталог →</a></p></div>
+<div class="card"><div class="eyebrow">Не знаешь, что выбрать?</div><p style="margin-top:8px">Шесть вопросов — и три растения под твое окно и вайб.</p><p style="margin-top:10px"><a class="btn" href="@/podbor/">Пройти квиз</a></p></div></aside>
+</div>
+</div>
+'''
+    return meta, body
 
 
 def main():
@@ -238,11 +349,18 @@ def main():
         'cats_json': cats_json, 'cats_tiles': cats_tiles,
         'contact': (f'<a href="mailto:{esc(email)}">{esc(email)}</a>' if email else 'адрес для связи появится здесь в ближайшее время'),
     }
-    urls = []
+    extra['plants_grid'] = plants_grid()
+    extra['quiz_json'] = quiz_json()
+    pages = []
     for name in sorted(os.listdir(os.path.join(SRC, 'pages'))):
-        if not name.endswith('.html'):
-            continue
-        meta, body = read_page(os.path.join(SRC, 'pages', name))
+        if name.endswith('.html'):
+            meta, body = read_page(os.path.join(SRC, 'pages', name))
+            pages.append((name, meta, body))
+    for p in PLANTS:
+        meta, body = plant_page(p)
+        pages.append(('plant:' + p['slug'], meta, body))
+    urls = []
+    for name, meta, body in pages:
         url = meta['url']
         if url == '/404.html':
             root = CFG.get('base_path', '/')  # 404 открывается по любому адресу — пути от корня сайта
@@ -250,7 +368,7 @@ def main():
             root = rel_root(url)
         page = layout(meta, expand(body, root, extra), root, meta.get('css'))
         page = page.replace('@/', root)
-        if 'ё' in page.replace('\\u0451', ''):
+        if 'ё' in page.replace('\\u0451', '') or 'Ё' in page:
             raise SystemExit('Буква ё в странице ' + name)
         path = out_path(url)
         os.makedirs(os.path.dirname(path), exist_ok=True)

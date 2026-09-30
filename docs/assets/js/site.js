@@ -117,20 +117,7 @@
       odd: { t: 'Коллекционер странного', d: 'Тебе скучно с обычным фикусом. Узоры, полоски и формы, про которые спрашивают гости.' }
     };
     // light — где нормально, cat — безопасно для кошек по ASPCA, dry — переживет пропуск полива, easy — для новичков, fussy — любит внимание
-    var P = [
-      { n: 'Хлорофитум', s: 'hlorofitum', url: 'rasteniya/hlorofitum/', light: ['bright', 'mid', 'low'], cat: true, dry: true, easy: true, bloom: false, vibes: ['clean', 'jungle'], why: 'Прощает забытый полив и сам себя размножает', v: { clean: 'Тонкие полосатые листья — легкий акцент без суеты', jungle: 'Свисающие усы с детками — зелени станет больше сама собой' } },
-      { n: 'Сансевиерия', s: 'sansevieriya', light: ['bright', 'mid', 'low'], cat: false, dry: true, easy: true, bloom: false, vibes: ['clean', 'odd'], why: 'Переживет отпуск и тень', v: { clean: 'Строгие вертикальные листья — чистая графика', odd: 'Полоски как у змеи — это тебе' } },
-      { n: 'Замиокулькас', s: 'zamiokulkas', light: ['mid', 'low'], cat: false, dry: true, easy: true, bloom: false, vibes: ['clean'], why: 'Стоик: мало света и редкий полив', v: { clean: 'Глянцевые листья, будто их только что протерли' } },
-      { n: 'Пеперомия', s: 'peperomiya', light: ['bright', 'mid'], cat: true, dry: true, easy: true, bloom: false, vibes: ['clean'], why: 'Компактная, не ядовита для кошек', v: { clean: 'Маленькая и аккуратная — встанет на полку или стол' } },
-      { n: 'Калатея', s: 'kalateya', light: ['mid', 'low'], cat: true, dry: false, easy: false, fussy: true, bloom: false, vibes: ['odd'], why: 'Красивая, но любит влажность и внимание', v: { odd: 'Листья с узором, как нарисованные, а на ночь еще и поднимаются' } },
-      { n: 'Нефролепис', s: 'nefrolepis', light: ['mid'], cat: true, dry: false, easy: false, fussy: true, bloom: false, vibes: ['jungle'], why: 'Пушистый папоротник, не ядовит для кошек', v: { jungle: 'Облако зелени — самый быстрый путь к джунглям' } },
-      { n: 'Монстера', s: 'monstera', light: ['bright', 'mid'], cat: false, dry: true, easy: true, bloom: false, vibes: ['jungle', 'odd'], why: 'Быстро растет и радует', v: { jungle: 'Огромные резные листья — главный символ джунглей', odd: 'Дырявые листья — классика странного' } },
-      { n: 'Спатифиллум', s: 'spatifillum', light: ['mid', 'low'], cat: false, dry: false, easy: true, bloom: true, vibes: ['clean', 'bloom'], why: 'Цветет в квартире и честно показывает, когда хочет пить', v: { clean: 'Белые цветы и темные листья — минимализм, который цветет', bloom: 'Белые «паруса» на цветоносах — цветет в обычной квартире' } },
-      { n: 'Антуриум', s: 'anturium', light: ['bright', 'mid'], cat: false, dry: false, easy: false, bloom: true, vibes: ['bloom', 'odd'], why: 'Яркие «сердечки» держатся долго', v: { bloom: 'Красные глянцевые «сердечки» — праздник на подоконнике', odd: 'Глянцевые «сердечки», будто из пластика, — но живые' } },
-      { n: 'Орхидея фаленопсис', s: 'orhideya-falenopsis', light: ['bright', 'mid'], cat: true, dry: true, easy: false, bloom: true, vibes: ['clean', 'bloom'], why: 'Не ядовита для кошек и не любит, когда заливают', v: { clean: 'Белая орхидея — эталон clean girl интерьера', bloom: 'Цветет долго, если не заливать' } },
-      { n: 'Драцена', s: 'dracena', light: ['bright', 'mid'], cat: false, dry: true, easy: true, bloom: false, vibes: ['clean', 'jungle'], why: 'Похожа на пальму, но без хлопот', v: { clean: 'Тонкие листья-перья — легкий силуэт', jungle: 'Пальмовое настроение без пальмы' } },
-      { n: 'Фикус Бенджамина', s: 'fikus-bendzhamina', light: ['bright'], cat: false, dry: false, easy: false, fussy: true, bloom: false, vibes: ['jungle'], why: 'Настоящее домашнее дерево, но не любит переезды', v: { jungle: 'Целое дерево в горшке' } }
-    ];
+    var P = JSON.parse($('#quiz-data').textContent);
     function score(p, a, strictLight) {
       if (a.cat === 'yes' && !p.cat) return null;                 // безопасность кота — жесткое правило
       if (strictLight && p.light.indexOf(a.light) < 0) return null;
@@ -192,7 +179,7 @@
           var t = el('span'); t.style.cssText = 'display:flex;flex-direction:column;gap:3px';
           var nm = el('strong', null, p.n); nm.style.cssText = 'font-family:Nunito,sans-serif;font-size:21px;font-weight:800'; t.appendChild(nm);
           if (p.v[a.vibe]) t.appendChild(el('span', null, p.v[a.vibe]));
-          t.appendChild(el('span', 'desc', p.why + (p.cat && !/кош/.test(p.why) ? ' · можно с котом' : '') + (p.url ? '' : ' · профиль скоро')));
+          t.appendChild(el('span', 'desc', p.why + (p.cat && !/кош/.test(p.why) ? ' · можно с котом' : '') + ''));
           c.appendChild(img); c.appendChild(t); box.appendChild(c);
         });
         if (res.relaxed) box.appendChild(el('p', 'desc', 'Под твое окно подошло мало вариантов, поэтому часть кандидатов любит чуть больше света. Поставь их поближе к окну или добавь фитолампу.'));
@@ -244,6 +231,7 @@
         head.appendChild(nm); head.appendChild(tg); out.appendChild(head);
         var t = document.createElement('p'); var b = document.createElement('b'); b.textContent = p.why + ' '; t.appendChild(b); t.appendChild(document.createTextNode(p.more)); out.appendChild(t);
         var a = document.createElement('a'); a.href = p.u; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Источник: ASPCA ↗'; a.style.color = 'var(--accent)'; out.appendChild(a);
+        var pr = document.createElement('a'); pr.href = ROOT + 'rasteniya/' + p.s + '/'; pr.textContent = 'Уход за растением →'; pr.style.color = 'var(--accent)'; out.appendChild(pr);
       } else {
         setMood('unknown'); plantImg.removeAttribute('src'); plantImg.alt = '';
         var h2 = document.createElement('h2'); h2.textContent = '«' + q + '» пока нет в нашем списке'; out.appendChild(h2);

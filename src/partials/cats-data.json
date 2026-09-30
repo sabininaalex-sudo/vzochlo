@@ -10,7 +10,8 @@
   ],
   "u": "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/spider-plant",
   "why": "В базе ASPCA — нетоксичен для кошек.",
-  "more": "Погрызет кончики — коту ничего, а листьям обидно. Поставь повыше ради красоты, а не ради безопасности."
+  "more": "Погрызет кончики — коту ничего, а листьям обидно. Поставь повыше ради красоты, а не ради безопасности.",
+  "s": "hlorofitum"
  },
  {
   "n": "Калатея",
@@ -22,7 +23,8 @@
   ],
   "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/calathea",
   "why": "В базе ASPCA — нетоксична для кошек.",
-  "more": "Капризничает она из-за сухого воздуха, а не из-за кота."
+  "more": "Капризничает она из-за сухого воздуха, а не из-за кота.",
+  "s": "kalateya"
  },
  {
   "n": "Пеперомия",
@@ -33,7 +35,8 @@
   ],
   "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/blunt-leaf-peperomia",
   "why": "В базе ASPCA — нетоксична для кошек.",
-  "more": "Компактная, можно держать хоть на столе."
+  "more": "Компактная, можно держать хоть на столе.",
+  "s": "peperomiya"
  },
  {
   "n": "Орхидея фаленопсис",
@@ -46,7 +49,8 @@
   ],
   "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/phalaenopsis-orchid",
   "why": "В базе ASPCA — нетоксична для кошек.",
-  "more": "Это про фаленопсис. Другие орхидеи проверяй отдельно."
+  "more": "Это про фаленопсис. Другие орхидеи проверяй отдельно.",
+  "s": "orhideya-falenopsis"
  },
  {
   "n": "Нефролепис",
@@ -58,7 +62,23 @@
   ],
   "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/boston-fern",
   "why": "В базе ASPCA — нетоксичен для кошек.",
-  "more": "Не путай с другими «папоротниками»: не все они безопасны."
+  "more": "Не путай с другими «папоротниками»: не все они безопасны.",
+  "s": "nefrolepis"
+ },
+ {
+  "n": "Хамедорея",
+  "l": "Chamaedorea elegans",
+  "v": "safe",
+  "syn": [
+   "пальма",
+   "хамедорея изящная",
+   "chamaedorea",
+   "parlor palm"
+  ],
+  "u": "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/parlor-palm",
+  "why": "В базе ASPCA — нетоксична для кошек.",
+  "more": "Редкий случай: пальма, которую можно держать рядом с котом.",
+  "s": "hamedoreya"
  },
  {
   "n": "Монстера",
@@ -69,7 +89,8 @@
   ],
   "u": "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/cutleaf-philodendron",
   "why": "Нерастворимые оксалаты кальция.",
-  "more": "Если погрыз: жжение во рту, слюни, рвота, трудно глотать."
+  "more": "Если погрыз: жжение во рту, слюни, рвота, трудно глотать.",
+  "s": "monstera"
  },
  {
   "n": "Спатифиллум",
@@ -81,7 +102,8 @@
   ],
   "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/peace-lily",
   "why": "Нерастворимые оксалаты кальция.",
-  "more": "Если погрыз: боль во рту, слюни, рвота. Это не настоящая лилия — настоящие лилии (Lilium) для кошек гораздо опаснее."
+  "more": "Если погрыз: боль во рту, слюни, рвота. Это не настоящая лилия — настоящие лилии (Lilium) для кошек гораздо опаснее.",
+  "s": "spatifillum"
  },
  {
   "n": "Сансевиерия",
@@ -95,7 +117,8 @@
   ],
   "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/mother-laws-tongue",
   "why": "Сапонины.",
-  "more": "Если погрыз: тошнота, рвота, понос."
+  "more": "Если погрыз: тошнота, рвота, понос.",
+  "s": "sansevieriya"
  },
  {
   "n": "Фикус Бенджамина",
@@ -107,7 +130,8 @@
   ],
   "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/fig",
   "why": "Фицин и псорален в млечном соке.",
-  "more": "Если погрыз: раздражение желудка и кожи."
+  "more": "Если погрыз: раздражение желудка и кожи.",
+  "s": "fikus-bendzhamina"
  },
  {
   "n": "Антуриум",
@@ -118,7 +142,8 @@
   ],
   "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/flamingo-flower",
   "why": "Нерастворимые оксалаты кальция.",
-  "more": "Если погрыз: боль и отек во рту, слюни, рвота. В базе ASPCA карточка на родственный вид, токсин тот же."
+  "more": "Если погрыз: боль и отек во рту, слюни, рвота. В базе ASPCA карточка на родственный вид, токсин тот же.",
+  "s": "anturium"
  },
  {
   "n": "Драцена",
@@ -130,7 +155,106 @@
   ],
   "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/red-marginated-dracaena",
   "why": "Токсин точно не установлен.",
-  "more": "Если погрыз: рвота, слюни, расширенные зрачки, частый пульс."
+  "more": "Если погрыз: рвота, слюни, расширенные зрачки, частый пульс.",
+  "s": "dracena"
+ },
+ {
+  "n": "Бегония",
+  "l": "Begonia",
+  "v": "toxic",
+  "syn": [
+   "begonia",
+   "бегония элатиор",
+   "королевская бегония"
+  ],
+  "u": "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/begonia",
+  "why": "Растворимые оксалаты кальция, больше всего в подземной части.",
+  "more": "Если погрыз: рвота, слюни.",
+  "s": "begoniya"
+ },
+ {
+  "n": "Аглаонема",
+  "l": "Aglaonema",
+  "v": "toxic",
+  "syn": [
+   "aglaonema",
+   "chinese evergreen"
+  ],
+  "u": "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/chinese-evergreen",
+  "why": "Нерастворимые оксалаты кальция.",
+  "more": "Если погрыз: боль и отек во рту, слюни, рвота, трудно глотать.",
+  "s": "aglaonema"
+ },
+ {
+  "n": "Филодендрон",
+  "l": "Philodendron",
+  "v": "toxic",
+  "syn": [
+   "philodendron",
+   "филодендрон лазящий",
+   "селлоум"
+  ],
+  "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/heartleaf-philodendron",
+  "why": "Нерастворимые оксалаты кальция.",
+  "more": "Если погрыз: боль и отек во рту, слюни, рвота, трудно глотать.",
+  "s": "filodendron"
+ },
+ {
+  "n": "Алоказия",
+  "l": "Alocasia",
+  "v": "toxic",
+  "syn": [
+   "alocasia",
+   "алоказия амазоника",
+   "слоновье ухо"
+  ],
+  "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/alocasia",
+  "why": "Нерастворимые оксалаты кальция.",
+  "more": "Если погрыз: боль и отек во рту, слюни, рвота, трудно глотать.",
+  "s": "alokaziya"
+ },
+ {
+  "n": "Адениум",
+  "l": "Adenium obesum",
+  "v": "toxic",
+  "syn": [
+   "пустынная роза",
+   "adenium",
+   "desert rose"
+  ],
+  "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/desert-rose",
+  "why": "Сердечные гликозиды — одно из самых опасных растений в списке.",
+  "more": "Если погрыз: рвота, понос, вялость, сбои сердечного ритма, возможна гибель. Сразу к ветеринару.",
+  "s": "adenium"
+ },
+ {
+  "n": "Каланхоэ",
+  "l": "Kalanchoe",
+  "v": "toxic",
+  "syn": [
+   "каланхое",
+   "kalanchoe",
+   "каланхоэ блоссфельда"
+  ],
+  "u": "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/kalanchoe",
+  "why": "Буфадиенолиды.",
+  "more": "Если погрыз: рвота, понос, в редких случаях сбои сердечного ритма.",
+  "s": "kalanhoe"
+ },
+ {
+  "n": "Герань (пеларгония)",
+  "l": "Pelargonium",
+  "v": "toxic",
+  "syn": [
+   "герань",
+   "пеларгония",
+   "pelargonium",
+   "geranium"
+  ],
+  "u": "https://www.aspca.org/pet-care/animal-poison-control/toxic-and-non-toxic-plants/geranium",
+  "why": "Гераниол и линалоол.",
+  "more": "Если погрыз: рвота, отказ от еды, вялость, раздражение кожи.",
+  "s": "pelargoniya"
  },
  {
   "n": "Замиокулькас",
@@ -143,6 +267,35 @@
   ],
   "u": "https://www.aspca.org/news/these-houseplants-can-cause-trouble-your-pets",
   "why": "Отдельной карточки в базе ASPCA нет.",
-  "more": "Но ASPCA упоминает его среди растений с оксалатами кальция: слюни, рвота, понос. Лучше повыше."
+  "more": "Но ASPCA упоминает его среди растений с оксалатами кальция: слюни, рвота, понос. Лучше повыше.",
+  "s": "zamiokulkas"
+ },
+ {
+  "n": "Традесканция",
+  "l": "Tradescantia",
+  "v": "care",
+  "syn": [
+   "tradescantia",
+   "зебрина",
+   "традесканция зебрина"
+  ],
+  "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/inch-plant",
+  "why": "Традесканция приречная в базе ASPCA ядовита: дерматит.",
+  "more": "Для зебрины и бледной карточек ASPCA нет. По данным NC State они раздражают кожу, рот и желудок. Лучше повыше.",
+  "s": "tradeskanciya"
+ },
+ {
+  "n": "Гибискус",
+  "l": "Hibiscus rosa-sinensis",
+  "v": "care",
+  "syn": [
+   "китайская роза",
+   "hibiscus",
+   "гибискус китайский"
+  ],
+  "u": "https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/hibiscus",
+  "why": "Для китайской розы вердикта ASPCA нет.",
+  "more": "Карточка ASPCA «Hibiscus» — про другой вид, сирийский гибискус. Пока нет данных, лучше повыше.",
+  "s": "gibiskus"
  }
 ]

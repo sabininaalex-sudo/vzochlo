@@ -294,3 +294,10 @@ input[type="text"], input[type="number"], select { font: 17px/1.2 Onest, sans-se
 /* Результат квиза */
 .vibe-card { display: flex; flex-direction: column; gap: 8px; background: linear-gradient(135deg, var(--tint-y), var(--tint-g)); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
 .quiz-box h3 { margin-top: 4px; }
+.plist { margin: 10px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+.plist a { color: var(--accent); }
+.rel-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.rel { display: flex; gap: 12px; align-items: center; text-decoration: none; color: inherit; }
+.rel img { width: 48px; height: 48px; object-fit: contain; flex: none; }
+.rel > span { display: flex; flex-direction: column; }
+.rel:hover strong { color: var(--accent); }
